@@ -116,3 +116,59 @@ function actualizarDatos($con){
         return false;
     }
 }
+
+function obtenerClases($con){
+
+    $query = "SELECT * FROM clases";
+
+    $q = mysqli_stmt_init($con);
+
+    mysqli_stmt_prepare($q, $query);
+
+    // bind the statement
+    /* mysqli_stmt_bind_param($q, 's', $email); */
+
+    // execute sql statement
+    mysqli_stmt_execute($q);
+    $result = mysqli_stmt_get_result($q);
+
+    $row = mysqli_fetch_all($result);
+
+    /* return empty($row) ? false : $row; */
+
+    if(!empty($row)){
+
+        return $row;
+    }else{
+
+        return false;
+    }
+}
+
+function obtenerClaseEspecifica($con, $id){
+
+    $query = "SELECT * FROM clases WHERE class_id = ?";
+
+    $q = mysqli_stmt_init($con);
+
+    mysqli_stmt_prepare($q, $query);
+
+    // bind the statement
+    mysqli_stmt_bind_param($q, 's', $id);
+
+    // execute sql statement
+    mysqli_stmt_execute($q);
+    $result = mysqli_stmt_get_result($q);
+
+    $row = mysqli_fetch_all($result);
+
+    /* return empty($row) ? false : $row; */
+
+    if(!empty($row)){
+
+        return $row;
+    }else{
+
+        return false;
+    }
+}
