@@ -1,0 +1,13 @@
+.a-delete{
+  color: rgb(255, 86, 86);
+  transition: .3s all ease;
+  cursor: default;
+}
+
+.a-delete:hover {
+  color: rgb(179, 0, 0);
+}
+
+.navbar {
+  box-shadow: 0px 2px 60px 10px rgba(79, 79, 79, 0.25);
+}

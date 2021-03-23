@@ -72,13 +72,13 @@
                                                 foreach ($resultados as $resultado) : 
                                         ?>
 
-                                <form class="user" method="POST" id="form_modificar" action="modificar_producto_action.php?id=<?php echo $resultado[0] ?>">
+                                <form class="user" method="POST" id="form_clase" action="datosClase.php">
                                         <div class="form-group">
                                             
                                             
                                             <h6 class="h3 mt-5 mb-5 text-gray-800">Clase: <?php echo $resultado[1] ?></h6>
 
-                                            <h6 class="h5 mt-5 text-gray-800">A continuación seleccione a sus estudiantes para la clase:</h6>
+                                            <h6 class="h5 mt-5 mb-4 text-gray-800">A continuación, puede modificar la lista de estudiantes para la clase:</h6>
 
                                             <?php
                                             
@@ -89,7 +89,7 @@
                                             
                                             ?>
                                             <div>
-                                                <select class="form-control" name="estudiantes" id="estudiantes" value="" required>
+                                                <select class="form-control" name="estudiantes" id="estudiantes" value="">
                                                 <?php
                                                 if(!empty($estudiantes)){
 
@@ -105,7 +105,7 @@
                                                 </select>
                                             </div>
 
-                                            <a class="btn btn-success mt-3" id="agregarLista">
+                                            <a class="btn btn-success mt-3 mb-4" id="agregarLista">
                                                 Agregar a la lista
                                             </a>
 
@@ -121,15 +121,16 @@
                                                 </thead>
                                                 <tbody id="tablaLista">
                                                     
+                                                    
                                                 </tbody>
                                             </table>
                                             
-                                            
+                                            <input type="hidden" name="idClase" value="<?php echo $id ?>">
                                             
                                         </div>
                                         
                                         <hr>
-                                        <button class="btn btn-success mt-3" id="modificar_submit" type="submit">
+                                        <button class="btn btn-success mt-3" id="iniciarClase_submit" type="submit">
                                             Iniciar clase
                                         </button>
 
@@ -166,10 +167,10 @@
 			data:"clase=" + $('#clase').val(),
 			success:function(r){
                 
-                var resultado = $.parseJSON(r);
+                var resultado = JSON.parse(JSON.stringify(r));
 				console.log(resultado);
                 /* $('#clase').html(resultado); */
-                cargarEstudiantes();
+                
 			}
 		});
 
@@ -177,6 +178,21 @@
 	}
 
     function cargarEstudiantes(){
+
+        var json_estudiantes = <?php echo json_encode($estudiantes); ?>;
+        console.log(json_estudiantes);
+        arr = JSON.parse(JSON.stringify(json_estudiantes)); //convert to javascript array
+        $.each(arr,function(key,estudiante){
+            console.log(estudiante);
+            html = '<tr><input type="hidden" name="estudiantesArray[]" value="'+estudiante[0]+'"><td class="celdaProducto">'+estudiante[1]+'</td><td class="celdaCantidad">'+estudiante[2]+'</td><td class="celdaStock">'+estudiante[4]+'</td><td class="celdaStock">'+estudiante[5]+'</td><td><a class="delete a-delete" title="Eliminar" data-toggle="tooltip"><i class="material-icons">&#xe14c;</i></a></td></tr>';
+            
+
+            if ( $('#tablaLista').children().length > 0 ) {
+                $('#tablaLista tr:last').after(html);
+            }else{
+                $('#tablaLista').html(html);
+            }
+        });
         
     }
 </script>
@@ -185,6 +201,7 @@
 	$(document).ready(function(){
 		$('#clase').val(0);
 		recargarLista();
+        cargarEstudiantes();
 
 		$('#clase').change(function(){
 			recargarLista();
@@ -222,18 +239,32 @@
 
             } */else{
 
-                var producto = $('#estudiantes').find(":selected").text();
-                var cantidad = $('#cantidad').val();
-                var stock = $('#stock').val();
+                $.ajax({
+                    type:"POST",
+                    url:"cargar_datos_especifico.php",
+                    data:"estudiante=" + $('#estudiantes').val(),
+                    success:function(r){
+                        
+                        html = r;
+            
+                        if ( $('#tablaLista').children().length > 0 ) {
+                            $('#tablaLista tr:last').after(html);
+                        }else{
+                            $('#tablaLista').html(html);
+                        }
+
+                    }
+                });
                 
-                html = '<tr><td class="celdaProducto">'+producto+'</td><td class="celdaCantidad">'+cantidad+'</td><td class="celdaStock">'+stock+'</td><td class="celdaStock">'+stock+'</td><td><a class="delete a-delete" title="Eliminar" data-toggle="tooltip"><i class="material-icons">&#xe14c;</i></a></td></tr>';
+                /* html = '<tr><td class="celdaProducto">'+producto+'</td><td class="celdaCantidad">'+cantidad+'</td><td class="celdaStock">'+stock+'</td><td class="celdaStock">'+stock+'</td><td><a class="delete a-delete" title="Eliminar" data-toggle="tooltip"><i class="material-icons">&#xe14c;</i></a></td></tr>'; */
+                
                 /* $('#tablaLista tr:last').after(html); */
 
-                if ( $('#tablaLista').children().length > 0 ) {
+                /* if ( $('#tablaLista').children().length > 0 ) {
                     $('#tablaLista tr:last').after(html);
                 }else{
                     $('#tablaLista').html(html);
-                }
+                } */
             }
 
     });
@@ -243,4 +274,12 @@
 		$(".add-new").removeAttr("disabled");
     });
 });
+
+
+/* $('#submit').click(function(){
+
+
+
+    $('#submit').submit();
+}); */
 </script>
