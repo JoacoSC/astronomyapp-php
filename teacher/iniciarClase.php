@@ -72,7 +72,7 @@
                                                 foreach ($resultados as $resultado) : 
                                         ?>
 
-                                <form class="user" method="POST" id="form_clase" action="datosClase.php">
+                                <form class="user" method="POST" id="form_clase" action="iniciarClase_action.php">
                                         <div class="form-group">
                                             
                                             

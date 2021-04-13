@@ -20,37 +20,16 @@
                     </div>
 
                     <!-- Content Row -->
-                    
-
-                    
-                    <!-- Content Row -->
-                    <div class="row justify-content-center">
-
-                        <!-- Content Column -->
-                        
-                        <div class="col-lg-6 mt-5 mb-4">
-                            <div class="card bg-info text-white shadow">
-                                <div class="card-body text-center">
-                                Entrar a una clase
-                                </div>
-                                <a href="miClase.php" class="stretched-link"></a>
-                            </div>
-                        </div>
-                        <!-- ******************** DIV DE GENERACION DE GRAFICOS ********************* -->
-
-                        
-                            <!-- Project Card Example -->
-                            <!-- <div class="card shadow mb-4">
+                    <div class="card shadow mb-4">
                                 <div class="card-header py-3">
-                                    <h6 class="m-0 font-weight-bold text-primary">Projects</h6>
+                                    <h6 class="m-0 font-weight-bold text-primary">Dato BD</h6>
                                 </div>
-
-                                
 
 
 
 
                                 <div id="show" class="card-body">
+                                
                                     
                                 </div>
 
@@ -59,7 +38,17 @@
 
 
                                 
-                            </div> -->
+                            </div>
+
+                    
+                    <!-- Content Row -->
+                    <div class="row justify-content-center">
+
+                        
+                        <!-- ******************** DIV DE GENERACION DE GRAFICOS ********************* -->
+
+                        
+                            
 
                             <!-- ******************** DIV DE GENERACION DE GRAFICOS ********************* -->
 
@@ -77,3 +66,10 @@
 
 ?>            
 
+<script type="text/javascript">
+    $(document).ready(function() {
+        setInterval(function () {
+            $('#show').load('revisarBD.php')
+        }, 1000);
+    });
+</script>

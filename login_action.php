@@ -17,7 +17,7 @@ if (empty($contraseña)){
 
 if (empty($error)){
     // sql query
-    $query = "SELECT id, nombre, apellido_pat, apellido_mat, rut, email, contraseña, telefono, fecha_nac, region, comuna, role FROM profesor WHERE email=?";
+    $query = "SELECT id, nombre, apellido_pat, apellido_mat, rut, email, contraseña, telefono, fecha_nac, region, comuna, role FROM teacher_srms WHERE email=?";
     $q = mysqli_stmt_init($con);
     mysqli_stmt_prepare($q, $query);
 
@@ -77,7 +77,7 @@ if (empty($error)){
                 $_SESSION['id'] = $row['id'];
                 print "Ingresaste correctamente";
                 /* print_r ($row); */
-                header("location: index.php");
+                header("location: student/index.php");
                 exit();
             }else{
                 header("location: login.php?fallo=true");

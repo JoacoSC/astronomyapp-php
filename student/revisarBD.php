@@ -1,68 +1,18 @@
 <?php 
+session_start();
 include ('../helper.php');
 include ('../connection.php');
 
-$cardbody = '<div id="show" class="card-body">';
-
-$content = '';
-
-$endCardBody = '</div>';
-
-$row = actualizarDatos($con);
-
-/* echo $row['num']; */
-
+$row = revisarBD($con, $_SESSION['id']);
 
 
 foreach ($row as $value) {
-	/* echo "ID: ".$value[0];
-	echo " - Valor: ".$value[1]."<br>"; */
-
-	/* ELECCIÓN DE COLOR ALEATORIO */
-
-	$n = $value[0];  
-	$sum=0;  
-	while($n > 0 || $sum > 9)
-    {
-        if($n == 0)
-        {
-            $n = $sum;
-            $sum = 0;
-        }
-        $sum += $n % 10;
-        $n = (int)$n / 10;
-    }
-
-	$color = '';
-
-	if($sum == 0 || $sum == 5){
-		$color = 'danger';
-	}else if($sum == 1 || $sum == 6){
-		$color = 'warning';
-	}else if($sum == 2 || $sum == 7){
-		$color = 'info';
-	}else if($sum == 3 || $sum == 8){
-		$color = 'success';
-	}else if($sum == 4 || $sum == 9){
-		$color = 'primary';
-	}
-
-	/* ELECCIÓN DE COLOR ALEATORIO */
 	
-	$graph = '<h4 class="small font-weight-bold">'.$value[3].' <span
-					class="float-right">'.$value[2].'%</span></h4>
-				<div class="progress mb-4">
-				<div class="progress-bar bg-'.$color.'" role="progressbar" style="width: '.$value[2].'%"
-					aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div>
-				</div>';
-
-	$content .= $graph;	
 	
 }
+    $id_clase = $row[0];
 
-	$html = $cardbody.$content.$endCardBody;
-
-	echo $html;
+	echo $id_clase;
 /* print_r ($row); */
 
 /* $strings = array(

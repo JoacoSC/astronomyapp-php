@@ -9,7 +9,7 @@ if(isset($_POST["clase"]))
 
     $clase = $_POST["clase"];
     
-    $query = "SELECT * FROM clases WHERE class_id=?";
+    $query = "SELECT * FROM class_srms WHERE class_id=?";
     $q = mysqli_stmt_init($con);
 
     mysqli_stmt_prepare($q, $query);

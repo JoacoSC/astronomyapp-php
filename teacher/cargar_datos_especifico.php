@@ -9,7 +9,7 @@ if(isset($_POST["estudiante"]))
 
     $estudiante = $_POST["estudiante"];
     
-    $query = "SELECT * FROM estudiante WHERE id=?";
+    $query = "SELECT * FROM student_srms WHERE student_id=?";
     $q = mysqli_stmt_init($con);
 
     mysqli_stmt_prepare($q, $query);
