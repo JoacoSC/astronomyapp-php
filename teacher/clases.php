@@ -21,21 +21,21 @@ include('header.php');
 ?>
 
 
-                <div class="container-fluid">
+                <div class="container-fluid card-style">
 
                     <!-- Page Heading -->
-                    <h1 class="h3 mb-4 text-gray-800">Gestión de clases</h1>
+                    <h1 class="h3 mt-2 mb-4 text-gray-800">Gestión de clases</h1>
 
                     <!-- DataTales Example -->
                     <span id="message"></span>
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">
                         	<div class="row">
-                            	<div class="col">
-                            		<h6 class="m-0 font-weight-bold text-primary">Lista de clases</h6>
-                            	</div>
-                            	<div class="col" align="right">
-                            		<button type="button" name="add_class" id="add_class" class="btn btn-success btn-circle btn-sm"><i class="fas fa-plus"></i></button>
+                            	<!-- <div class="col">
+                            		<h6 class="m-0 font-weight-bold text-primary"></h6>
+                            	</div> -->
+                            	<div class="col" align="left">
+                            		<button type="button" name="add_class" id="add_class" class="btn btn-info btn-sm">Crear una nueva clase&nbsp;&nbsp;<i class="fas fa-plus"></i></button>
                             	</div>
                             </div>
                         </div>

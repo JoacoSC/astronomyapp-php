@@ -27,46 +27,45 @@
     }
 
 ?>
-
-
         
-                <div class="row" style="padding-top: 20px;">
-                    <div class="col-lg-12 offset-lg-2" >
-                    <a class="btn btn-primary shadow-sm" href="../excel/estudiantes.xlsx" download="estudiantes.xlsx" type="button" style="background: rgb(0,163,255);border-color: rgb(0,163,255);">
-                    Descargar plantilla Excel
-                    </a>
+  <div class="container-fluid card-style">
 
-                            <div class="table-responsive" style="padding: 30px;">
-                            <br>
-                            <h5>Puedes registrar varios estudiantes en 3 simples pasos:</h5><br>
-                            <dl>
-                              <dt>Paso 1:</dt>
-                              <dd>- Descarga la plantilla Excel</dd>
-                              <dt>Paso 2:</dt>
-                              <dd>- Ingresa los datos de tus estudiantes</dd>
-                              <dt>Paso 3:</dt>
-                              <dd>- Sube aquí tu archivo Excel y presiona "Registrar estudiantes"</dd>
-                            </dl> 
-                            <span id="message"></span>
-                                <form method="post" id="import_excel_form" enctype="multipart/form-data">
-                                    <div class="table" style="background: rgba(255,255,255,0.7);margin-left:15px;margin-bottom:0px;border-radius: 20px;max-width:95%;">
-                                        
-                                        <input type="file" style="margin-top:15px;" name="import_excel" />
-                                        <br>
-                                        
-                                        <input type="submit" style="margin-top:15px;margin-bottom:15px;background: rgb(0,163,255);border-color: rgb(0,163,255);" name="import" id="import" class="btn btn-primary" value="Registrar estudiantes" />
-                                    
-                                    </div>
-                                </form>
-                            <br />
-                                
-                            </div>
-                        
-                    </div>
-                </div>
+  <h1 class="h3 mt-2 mb-4 text-gray-800">Registro de estudiantes</h1>
+
+    <div class="card shadow mb-4">
+      <div class="card-body">
           
-    
+        <a class="btn btn-info btn-sm shadow-sm" href="../excel/estudiantes.xlsx" download="estudiantes.xlsx" type="button" >
+        Descargar plantilla Excel
+        </a>
 
+        <div class="table-responsive">
+          <br>
+          <h5>Puedes registrar varios estudiantes en 3 simples pasos:</h5><br>
+          <dl>
+            <dt>Paso 1:</dt>
+            <dd>- Descarga la plantilla Excel</dd>
+            <dt>Paso 2:</dt>
+            <dd>- Ingresa los datos de tus estudiantes</dd>
+            <dt>Paso 3:</dt>
+            <dd>- Sube aquí tu archivo Excel y presiona "Registrar estudiantes"</dd>
+          </dl> 
+          <span id="message"></span>
+          <form method="post" id="import_excel_form" enctype="multipart/form-data">
+              <div class="table">
+                  
+                  <input type="file" style="margin-top:15px;" name="import_excel" />
+                  <br>
+                  
+                  <input class="btn btn-info mt-4" type="submit" name="import" id="import" class="btn btn-primary" value="Registrar estudiantes" />
+              
+              </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 
 <?php include 'footer.php'; ?>
 

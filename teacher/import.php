@@ -28,7 +28,7 @@ class MyReadFilter implements \PhpOffice\PhpSpreadsheet\Reader\IReadFilter {
 
     public function readCell($column, $row, $worksheetName = '') {
         // Read title row and rows 20 - 30
-        if ($row >= 30 && $row<=33) {
+        if ($row >= 40 && $row<=43) {
             return true;
         }
         return false;
@@ -87,14 +87,14 @@ if($_FILES["import_excel"]["name"] != '')
 
    $email_profesor = $user['email'];
 
-   $query = "INSERT INTO estudiante (nombre, apellido_pat, apellido_mat, rut, email, contraseña, institucion, email_profesor)"; 
+   $query = "INSERT INTO student_srms (student_name, student_father_lastname, student_mother_lastname, rut, student_email_id, email_profesor, hashed_pass, institution)"; 
    $query .= "VALUES( ?, ?, ?, ?, ?, ?, ?, ?)";
 
    $q = mysqli_stmt_init($con);
 
    mysqli_stmt_prepare($q, $query);
 
-   mysqli_stmt_bind_param($q, 'ssssssss', $nombre, $apellido_pat, $apellido_mat, $rut, $email, $hashed_pass, $institucion, $email_profesor);
+   mysqli_stmt_bind_param($q, 'ssssssss', $nombre, $apellido_pat, $apellido_mat, $rut, $email, $email_profesor, $hashed_pass, $institucion);
    
    mysqli_stmt_execute($q);
    

@@ -9,11 +9,11 @@
     </div> -->
     
                 <!-- Begin Page Content -->
-                <div class="container-fluid">
+                <div class="container-fluid card-style">
 
                     <!-- Page Heading -->
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                        <h1 class="h3 mb-0 text-gray-800"><?php if (isset( $_SESSION['id'])){echo "Bienvenid@ " .  $user[1] . "!"; ?></h1>
+                        <h1 class="h3 mt-2 mb-4 text-gray-800"><?php if (isset( $_SESSION['id'])){echo "Bienvenid@ " .  $user[1] . "!"; ?></h1>
                             <?php
                         }
                         ?>
@@ -36,6 +36,8 @@
                                 <a href="iniciarClase.php" class="stretched-link"></a>
                             </div>
                         </div>
+                        
+
                         <!-- ******************** DIV DE GENERACION DE GRAFICOS ********************* -->
 
                         
@@ -64,6 +66,7 @@
                             <!-- ******************** DIV DE GENERACION DE GRAFICOS ********************* -->
 
                     </div>
+                    <h1 class="h3 mt-2 mb-4 text-gray-800">PONER UN SLIDER AQUI</h1>
 
                 </div>
                 <!-- /.container-fluid -->
