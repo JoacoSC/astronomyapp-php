@@ -26,7 +26,7 @@
 ?>
 
                 <!-- Begin Page Content -->
-                <div class="container-fluid card-style">
+                <div class="container-fluid card-style mb-5 pb-4">
                 <h1 class="h3 mt-2 mb-4 text-gray-800">Mis estudiantes</h1>
 
                     <!-- Page Heading -->
@@ -36,7 +36,7 @@
                             href="https://datatables.net">official DataTables documentation</a>.</p> -->
 
                     <!-- DataTales Example -->
-                    <div class="card shadow mb-4">
+                    <div class="card">
                         
                         <div class="card-body">
                             <div class="table-responsive">

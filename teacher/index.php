@@ -24,12 +24,20 @@
 
                     
                     <!-- Content Row -->
-                    <div class="row justify-content-center">
+                    <div class="row">
 
                         <!-- Content Column -->
                         
-                        <div class="col-lg-6 mt-5 mb-4">
+                        <div class="col-6 mt-5 mb-4">
                             <div class="card bg-info text-white shadow">
+                                <div class="card-body text-center">
+                                Crear una clase
+                                </div>
+                                <a href="clases.php" class="stretched-link"></a>
+                            </div>
+                        </div>
+                        <div class="col-6 mt-5 mb-4">
+                            <div class="card bg-start-class text-white shadow">
                                 <div class="card-body text-center">
                                 Comenzar una clase
                                 </div>

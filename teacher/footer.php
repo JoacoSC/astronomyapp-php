@@ -56,7 +56,7 @@
     <!-- Page level custom scripts -->
     <script src="../js/demo/datatables-demo.js"></script>
 
-    <script type="text/javascript" src="../vendor/parsley/dist/parsley.min.js"></script>
+    <script type="text/javascript" src="../vendor/parsley/dist/parsley.js"></script>
 
     <script type="text/javascript" src="../vendor/bootstrap-select/bootstrap-select.min.js"></script>
 

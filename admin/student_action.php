@@ -6,6 +6,8 @@ include('srms.php');
 
 $object = new srms();
 
+include('../connection.php');
+
 if(isset($_POST["action"]))
 {
 	if($_POST["action"] == 'fetch')
@@ -15,9 +17,9 @@ if(isset($_POST["action"]))
 		$output = array();
 
 		$main_query = "
-		SELECT * FROM student_srms 
-		INNER JOIN class_srms 
-		ON class_srms.class_id = student_srms.class_id 
+			SELECT * FROM student_srms 
+			INNER JOIN class_srms 
+			ON class_srms.class_id = student_srms.class_id 
 		";
 
 		$search_query = '';
@@ -113,47 +115,73 @@ if(isset($_POST["action"]))
 		$error = '';
 
 		$success = '';
+		
+		$student_email_id =	$_POST["student_email"];
+		
+		$query = "SELECT * FROM student_srms WHERE student_email_id = ?";
 
-		$data = array(
-			':class_id'			=>	$_POST["class_id"],
-			':student_roll_no'	=>	$_POST["student_roll_no"]
-		);
+		$q = mysqli_stmt_init($con);
 
-		$object->query = "
-		SELECT * FROM student_srms 
-		WHERE class_id = :class_id 
-		AND student_roll_no = :student_roll_no
-		";
+		mysqli_stmt_prepare($q, $query);
 
-		$object->execute($data);
+		// bind the statement
+		mysqli_stmt_bind_param($q, 's', $student_email_id);
 
-		if($object->row_count() > 0)
+		// execute sql statement
+		mysqli_stmt_execute($q);
+
+		$result = mysqli_stmt_get_result($q);
+
+		$row_count = mysqli_num_rows($result);
+		
+		if($row_count > 0)
 		{
-			$error = '<div class="alert alert-danger">El Nro. de Matricula ya existe en la clase <b>'.$object->Get_class_name($_POST["class_id"]).'</b></div>';
+			$error = '<div class="alert alert-danger"><b>Error! </b>El email del estudiante ya está registrado</div>';
 		}
 		else
 		{
-			$data = array(
-				':class_id'				=>	$object->clean_input($_POST["class_id"]),
-				':student_name'			=>	$object->clean_input($_POST["student_name"]),
-				':student_roll_no'		=>	$object->clean_input($_POST["student_roll_no"]),
-				':student_email_id'		=>	$_POST["student_email_id"],
-				':student_gender'		=>	$_POST["student_gender"],
-				':student_dob'			=>	$_POST["student_dob"],
-				':student_status'		=>	'Habilitado',
-				':student_added_by'		=>	$object->Get_user_name($_SESSION['user_id']),
-				':student_added_on'		=>	$object->now
-			);
+			$name 		=	$_POST["student_name"];
+			$ap_pat 	=	$_POST["student_ap_pat"];
+			$ap_mat 	=	$_POST["student_ap_mat"];
+			$rut 		=	$_POST["rut"];
+			$dv 		=	$_POST["dv"];
+			$email 		=	$_POST["student_email"];
+			$dob 		=	$_POST["student_dob"];
+			$tea_email 	=	$_POST["student_teacher_email"];
+			$inst 		=	$_POST["student_institution"];
 
-			$object->query = "
-			INSERT INTO student_srms 
-			(class_id, student_name, student_roll_no, student_email_id, student_gender, student_dob, student_status, student_added_by, student_added_on) 
-			VALUES (:class_id, :student_name, :student_roll_no, :student_email_id, :student_gender, :student_dob, :student_status, :student_added_by, :student_added_on)
-			";
+			//CALCULO DE CONTRASEÑA
+			
+			$primerResultado = substr($rut, 0, 4);
+			$segundoResultado = substr($name, 0, 4);
+			$contraseña = $primerResultado.$segundoResultado;
 
-			$object->execute($data);
+			$hashed_pass = password_hash($contraseña, PASSWORD_DEFAULT);
+			
+			//CALCULO DE CONTRASEÑA
 
-			$success = '<div class="alert alert-success">Estudiante agregado en la clase <b>'.$object->Get_class_name($_POST["class_id"]).'</b></div>';
+			$query = "INSERT INTO student_srms (student_name, student_father_lastname, student_mother_lastname, rut, dv, student_email_id, student_dob, email_profesor, hashed_pass, institution)";
+			/* VALUES ('$nombre', '$apellidoPat','$apellidoMat','$rut','$email','". md5($contraseña)."','$telefono','$fecha_nac','$region','$comuna')"); */
+			$query .= " VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+
+			// initialize a statement
+			$q = mysqli_stmt_init($con);
+
+			// prepare sql statement
+			mysqli_stmt_prepare($q, $query);
+
+			// bind values
+			mysqli_stmt_bind_param($q, 'sssiisssss', $name, $ap_pat, $ap_mat, $rut, $dv, $email, $dob, $tea_email, $hashed_pass, $inst);
+
+			// execute statement
+			mysqli_stmt_execute($q);
+
+			if(mysqli_stmt_affected_rows($q) == 1){
+
+				$success = '<div class="alert alert-success"><b>Éxito! </b>Estudiante agregado correctamente!</div>';
+			}else{
+				$error = '<div class="alert alert-danger"><b>Error! </b>Ocurrió algún error durante el registro</div>';
+			}
 		}
 
 		$output = array(
@@ -178,12 +206,16 @@ if(isset($_POST["action"]))
 
 		foreach($result as $row)
 		{
-			$data['class_id'] = $row['class_id'];
-			$data['student_name'] = $row['student_name'];
-			$data['student_roll_no'] = $row['student_roll_no'];
-			$data['student_email_id'] = $row['student_email_id'];
-			$data['student_gender'] = $row['student_gender'];
-			$data['student_dob'] = $row['student_dob'];
+			$data['student_name'] 				= $row['student_name'];
+			$data['student_ap_pat'] 			= $row['student_father_lastname'];
+			$data['student_ap_mat'] 			= $row['student_mother_lastname'];
+			$data['rut'] 						= $row['rut'];
+			$data['dv'] 						= $row['dv'];
+			$data['student_email'] 				= $row['student_email_id'];
+			$data['student_dob']				= $row['student_dob'];
+			$data['student_teacher_email']		= $row['email_profesor'];
+			$data['student_institution']		= $row['institution'];
+			
 		}
 
 		echo json_encode($data);
@@ -196,50 +228,52 @@ if(isset($_POST["action"]))
 		$success = '';
 
 		$data = array(
-			':class_id'			=>	$_POST["class_id"],
-			':student_roll_no'	=>	$_POST["student_roll_no"],
 			':student_id'		=>	$_POST['hidden_id']
 		);
 
 		$object->query = "
 		SELECT * FROM student_srms 
-		WHERE class_id = :class_id 
-		AND student_roll_no = :student_roll_no 
-		AND student_id != :student_id
+		WHERE student_id = :student_id
 		";
 
 		$object->execute($data);
 
-		if($object->row_count() > 0)
+		if($object->row_count() > 1)
 		{
-			$error = '<div class="alert alert-danger">El Nro. de Matricula ya existe en la clase <b>'.$object->Get_class_name($_POST["class_id"]).'</b></div>';
+			$error = '<div class="alert alert-danger"><b>Error!</b>Existe otro alumno con el mismo ID</div>';
 		}
 		else
 		{
 
 			$data = array(
-				':class_id'				=>	$object->clean_input($_POST["class_id"]),
-				':student_name'			=>	$object->clean_input($_POST["student_name"]),
-				':student_roll_no'		=>	$object->clean_input($_POST["student_roll_no"]),
-				':student_email_id'		=>	$_POST["student_email_id"],
-				':student_gender'		=>	$_POST["student_gender"],
-				':student_dob'			=>	$_POST["student_dob"]
+				':student_name'			=>	$_POST["student_name"],
+				':student_ap_pat'		=>	$_POST["student_ap_pat"],
+				':student_ap_mat'		=>	$_POST["student_ap_mat"],
+				':rut'					=>	$_POST["rut"],
+				':dv'					=>	$_POST["dv"],
+				':student_email'		=>	$_POST["student_email"],
+				':student_dob'			=>	$_POST["student_dob"],
+				':student_teacher_email'=>	$_POST["student_teacher_email"],
+				':student_institution'	=>	$_POST["student_institution"]
 			);
 
 			$object->query = "
 			UPDATE student_srms 
-			SET class_id = :class_id, 
-			student_name = :student_name, 
-			student_roll_no = :student_roll_no, 
-			student_email_id = :student_email_id, 
-			student_gender = :student_gender, 
-			student_dob = :student_dob 
+			SET student_name = :student_name, 
+			student_father_lastname = :student_ap_pat, 
+			student_mother_lastname = :student_ap_mat, 
+			rut = :rut, 
+			dv = :dv, 
+			student_email_id = :student_email, 
+			student_dob = :student_dob, 
+			email_profesor = :student_teacher_email, 
+			institution = :student_institution 
 			WHERE student_id = '".$_POST['hidden_id']."'
 			";
 
 			$object->execute($data);
 
-			$success = '<div class="alert alert-success">Datos del estudiante actualizados</div>';
+			$success = '<div class="alert alert-success"><b>Éxito! </b>Datos del estudiante actualizados, se refrescará la página...</div>';
 			
 		}
 
@@ -278,7 +312,7 @@ if(isset($_POST["action"]))
 
 		$object->execute();
 
-		echo '<div class="alert alert-success">Estudiante eliminado</div>';
+		echo '<div class="alert alert-success"><b>Éxito! </b>Estudiante eliminado correctamente</div>';
 	}
 
 }

@@ -33,22 +33,15 @@ foreach($result as $row)
 
 ?>
 
+				<div class="container-fluid card-style">
+                
                     <!-- Page Heading -->
-                    <h1 class="h3 mb-4 text-gray-800">Gestión de temas de la clase: <?php echo $class_name; ?></h1>
+					<h1 class="h3 mt-2 mb-4 text-gray-800">Gestión de temas de la clase: <?php echo $class_name; ?></h1>    
 
                     <!-- DataTales Example -->
                     <span id="message"></span>
                     <div class="card shadow mb-4">
-                        <div class="card-header py-3">
-                        	<div class="row">
-                            	<div class="col">
-                            		<h6 class="m-0 font-weight-bold text-primary">Lista de temas</h6>
-                            	</div>
-                            	<div class="col" align="right">
-
-                            	</div>
-                            </div>
-                        </div>
+                        
                         <div class="card-body">
                             <div class="table-responsive">
                                 <table class="table table-bordered" id="subject_table" width="100%" cellspacing="0">
@@ -67,6 +60,7 @@ foreach($result as $row)
                             </div>
                         </div>
                     </div>
+				</div>
 
                 <?php
                 include('footer.php');

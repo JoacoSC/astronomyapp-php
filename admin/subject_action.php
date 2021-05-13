@@ -80,18 +80,18 @@ if(isset($_POST["hidden_action"]))
 			$status = '';
 			if($row["subject_status"] == 'Habilitado')
 			{
-				$status = '<button type="button" name="status_button" class="btn btn-primary btn-sm status_button" data-id="'.$row["class_id"].'" data-status="'.$row["subject_status"].'">Habilitado</button>';
+				$status = '<button type="button" name="status_button" class="btn btn-primary btn-sm status_button" data-id="'.$row["subject_id"].'" data-status="'.$row["subject_status"].'">Habilitado</button>';
 			}
 			else
 			{
-				$status = '<button type="button" name="status_button" class="btn btn-danger btn-sm status_button" data-id="'.$row["class_id"].'" data-status="'.$row["subject_status"].'">Deshabilitado</button>';
+				$status = '<button type="button" name="status_button" class="btn btn-danger btn-sm status_button" data-id="'.$row["subject_id"].'" data-status="'.$row["subject_status"].'">Deshabilitado</button>';
 			}
 			$sub_array[] = $status;
 			$sub_array[] = '
 			<div align="center">
-			<button type="button" name="edit_button" class="btn btn-warning btn-circle btn-sm edit_button" data-id="'.$row["class_id"].'"><i class="fas fa-edit"></i></button>
+			<button type="button" name="edit_button" class="btn btn-warning btn-circle btn-sm edit_button" data-id="'.$row["subject_id"].'"><i class="fas fa-edit"></i></button>
 			&nbsp;
-			<button type="button" name="delete_button" class="btn btn-danger btn-circle btn-sm delete_button" data-id="'.$row["class_id"].'"><i class="fas fa-times"></i></button>
+			<button type="button" name="delete_button" class="btn btn-danger btn-circle btn-sm delete_button" data-id="'.$row["subject_id"].'"><i class="fas fa-times"></i></button>
 			</div>
 			';
 			$data[] = $sub_array;

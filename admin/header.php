@@ -1,3 +1,9 @@
+<?php
+
+include('../connection.php');
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -9,7 +15,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Online Student Result Management System in PHP</title>
+    <title>Sistema de administración Astronomyapp</title>
 
     <!-- Custom fonts for this template-->
     <link href="../vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -20,9 +26,13 @@
     <!-- Custom styles for this template-->
     <link href="../css/sb-admin-2.min.css" rel="stylesheet">
 
-    <!-- Custom styles for this page -->
-    <link href="../vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
+    <link href="../css/styles.css" rel="stylesheet">
 
+    <!-- Custom styles for this page -->
+    <!-- <link href="../vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet"> -->
+    
+    <link href="../vendor/datatables/fixedcolumns-3.3.2/css/fixedcolumns.bootstrap4.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="../vendor/DataTables/datatables.min.css"/>
     <link rel="stylesheet" type="text/css" href="../vendor/parsley/parsley.css"/>
 
     <link rel="stylesheet" type="text/css" href="../vendor/bootstrap-select/bootstrap-select.min.css"/>
@@ -62,7 +72,7 @@
                     <span>Clases</span></a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="student.php">
+                <a class="nav-link" href="students.php">
                     <i class="fas fa-address-book"></i>
                     <span>Estudiantes</span></a>
             </li>
@@ -74,21 +84,17 @@
             <li class="nav-item">
                 <a class="nav-link" href="user.php">
                     <i class="fas fa-users-cog"></i>
-                    <span>Usuarios</span></a>
+                    <span>Profesores</span></a>
             </li>
             <?php
             }
             ?>
-            <li class="nav-item">
-                <a class="nav-link" href="#">
+            <!-- <li class="nav-item">
+                <a class="nav-link" href="subject2.php">
                     <i class="fas fa-graduation-cap"></i>
-                    <span>Opcion D</span></a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">
-                    <i class="fas fa-graduation-cap"></i>
-                    <span>Opcion E</span></a>
-            </li>
+                    <span>Temas</span></a>
+            </li> -->
+            
             <!-- Sidebar Toggler (Sidebar) -->
             <div class="text-center d-none d-md-inline">
                 <button class="rounded-circle border-0" id="sidebarToggle"></button>
@@ -177,4 +183,4 @@
                 <!-- End of Topbar -->
 
                 <!-- Begin Page Content -->
-                <div class="container-fluid">
+                <div class="container-fluid card-style mb-5 pb-4">

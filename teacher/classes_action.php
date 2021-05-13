@@ -1,15 +1,19 @@
 <?php
 
 //classes_action.php
+include('../connection.php');
 
 include('srms.php');
 
 $object = new srms();
 
+
 if(isset($_POST["action"]))
 {
 	if($_POST["action"] == 'fetch')
 	{
+		/* $teacher_id = $_POST["teacher_id"]; */
+		
 		$order_column = array('class_name', 'class_status');
 
 		$output = array();
@@ -138,6 +142,41 @@ if(isset($_POST["action"]))
 
 			$object->execute($data);
 
+			$query = "SELECT MAX(class_id) FROM class_srms";
+
+			$q = mysqli_stmt_init($con);
+
+			mysqli_stmt_prepare($q, $query);
+
+			// bind the statement
+			/* mysqli_stmt_bind_param($q, 's', $email); */
+
+			// execute sql statement
+			mysqli_stmt_execute($q);
+			$result = mysqli_stmt_get_result($q);
+
+			$row = mysqli_fetch_all($result);
+
+			if(mysqli_stmt_affected_rows($q) == 1){
+
+				$class_id = $row[0][0];
+
+				$query = "INSERT INTO class_subject_srms (class_id) VALUES (?)";
+
+				$q = mysqli_stmt_init($con);
+
+				mysqli_stmt_prepare($q, $query);
+
+				mysqli_stmt_bind_param($q, 'i', $class_id);
+				
+				mysqli_stmt_execute($q);
+				
+			}else{
+				$fallo = "No encontrado";
+			}
+
+			/* return empty($row) ? false : $row; */
+
 			$success = '<div class="alert alert-success alert-dismissible fade show">Clase creada<button type="button" class="close" data-dismiss="alert" aria-label="Close">
 			<span aria-hidden="true">&times;</span>
 		  </button></div>';
@@ -252,6 +291,18 @@ if(isset($_POST["action"]))
 		";
 
 		$object->execute();
+
+		$class_id = $_POST["id"];
+
+		$query = "DELETE FROM class_subject_srms WHERE class_id = ?";
+
+		$q = mysqli_stmt_init($con);
+
+		mysqli_stmt_prepare($q, $query);
+
+		mysqli_stmt_bind_param($q, 'i', $class_id);
+		
+		mysqli_stmt_execute($q);
 
 		echo '<div class="alert alert-success alert-dismissible fade show">Clase eliminada<button type="button" class="close" data-dismiss="alert" aria-label="Close">
 		<span aria-hidden="true">&times;</span>

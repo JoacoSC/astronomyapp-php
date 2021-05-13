@@ -14,7 +14,7 @@
 
 .card-style{
   background-color: white;
-  box-shadow: 0px 2px 20px 15px rgba(79, 79, 79, 0.20);
+  box-shadow: 0px 2px 15px 3px rgba(79, 79, 79, 0.2);
   width:95%;
   border-radius:10px;
   padding-top:15px;
@@ -25,9 +25,13 @@
 }
 
 .background{
-  /* background-image: url(../img/moai.jpg);
+  /* background-image: url(../img/fondo_web_2.png);
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover; */
   background-color: white;
+}
+
+.bg-start-class{
+  background-color: #ff006a !important;
 }

@@ -28,11 +28,11 @@
 
 ?>
         
-  <div class="container-fluid card-style">
+  <div class="container-fluid card-style mb-5 pb-4">
 
   <h1 class="h3 mt-2 mb-4 text-gray-800">Registro de estudiantes</h1>
 
-    <div class="card shadow mb-4">
+    <div class="card">
       <div class="card-body">
           
         <a class="btn btn-info btn-sm shadow-sm" href="../excel/estudiantes.xlsx" download="estudiantes.xlsx" type="button" >

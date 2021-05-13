@@ -203,3 +203,113 @@ function revisarBD($con, $id){
         return false;
     }
 }
+
+function actualizarPerfil($con, $id){
+    
+    $query = "SELECT id_clase FROM estudiante WHERE id=?";
+
+    $q = mysqli_stmt_init($con);
+
+    mysqli_stmt_prepare($q, $query);
+
+    // bind the statement
+    mysqli_stmt_bind_param($q, 's', $id);
+
+    // execute sql statement
+    mysqli_stmt_execute($q);
+    $result = mysqli_stmt_get_result($q);
+
+    $row = mysqli_fetch_array($result);
+
+    /* return empty($row) ? false : $row; */
+
+    if(!empty($row)){
+
+        return $row;
+    }else{
+
+        return false;
+    }
+}
+
+function obtenerTemas($con, $id_clase){
+
+    $query = "SELECT * FROM subject_srms WHERE class_id = ?";
+
+    $q = mysqli_stmt_init($con);
+
+    mysqli_stmt_prepare($q, $query);
+
+    // bind the statement
+    mysqli_stmt_bind_param($q, 'i', $id_clase);
+
+    // execute sql statement
+    mysqli_stmt_execute($q);
+    $result = mysqli_stmt_get_result($q);
+
+    $row = mysqli_fetch_all($result);
+
+    /* return empty($row) ? false : $row; */
+
+    if(!empty($row)){
+
+        return $row;
+    }else{
+
+        return false;
+    }
+}
+
+function obtenerEstudiantesAdmin($con){
+    $query = "SELECT * FROM student_srms";
+
+    $q = mysqli_stmt_init($con);
+
+    mysqli_stmt_prepare($q, $query);
+
+    // bind the statement
+    /* mysqli_stmt_bind_param($q, 's', $email); */
+
+    // execute sql statement
+    mysqli_stmt_execute($q);
+    $result = mysqli_stmt_get_result($q);
+
+    $row = mysqli_fetch_all($result);
+
+    /* return empty($row) ? false : $row; */
+
+    if(!empty($row)){
+
+        return $row;
+    }else{
+
+        return false;
+    }
+}
+
+function obtenerClasesTeacher($con, $teacher_id){
+    $query = "SELECT * FROM class_srms WHERE class_teacher = ?";
+
+    $q = mysqli_stmt_init($con);
+
+    mysqli_stmt_prepare($q, $query);
+
+    // bind the statement
+    mysqli_stmt_bind_param($q, 's', $teacher_id);
+
+    // execute sql statement
+    mysqli_stmt_execute($q);
+    $result = mysqli_stmt_get_result($q);
+
+    $row = mysqli_fetch_all($result);
+
+    /* return empty($row) ? false : $row; */
+
+    if(!empty($row)){
+
+        return $row;
+    }else{
+
+        return false;
+    }
+}

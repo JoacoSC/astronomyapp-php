@@ -21,21 +21,18 @@ include('header.php');
 ?>
 
                     <!-- Page Heading -->
-                    <h1 class="h3 mb-4 text-gray-800">Gestión de clases</h1>
+					<div class="row">
+						<div class="col" align="left">
+							<h1 class="h3 mt-2 mb-4 text-gray-800">Gestión de clases</h1>
+                        </div>
+						<div class="col" align="right">
+							<button type="button" name="add_class" id="add_class" class="btn btn-info btn-sm mt-3 mr-2">Crear una nueva clase&nbsp;&nbsp;<i class="fas fa-plus"></i></button>
+                        </div>
+					</div>
 
                     <!-- DataTales Example -->
                     <span id="message"></span>
-                    <div class="card shadow mb-4">
-                        <div class="card-header py-3">
-                        	<div class="row">
-                            	<div class="col">
-                            		<h6 class="m-0 font-weight-bold text-primary">Lista de clases</h6>
-                            	</div>
-                            	<div class="col" align="right">
-                            		<button type="button" name="add_class" id="add_class" class="btn btn-success btn-circle btn-sm"><i class="fas fa-plus"></i></button>
-                            	</div>
-                            </div>
-                        </div>
+                    <div class="card">
                         <div class="card-body">
                             <div class="table-responsive">
                                 <table class="table table-bordered" id="class_table" width="100%" cellspacing="0">
@@ -99,7 +96,21 @@ include('header.php');
                     <span id="subject_form_message"></span>
                     <div class="form-group">
                         <label>Nombre del tema</label>
-                        <input type="text" name="subject_name" id="subject_name" class="form-control" required data-parsley-pattern="/^[a-zA-Z0-9 \s]+$/" data-parsley-trigger="keyup" />
+                        <!-- <input type="text" name="subject_name" id="subject_name" class="form-control" required data-parsley-pattern="/^[a-zA-Z0-9 \s]+$/" data-parsley-trigger="keyup" /> -->
+                        <select type="text" name="subject_name" id="subject_name" class="form-control" data-parsley-trigger="keyup">
+
+						<?php
+							/* foreach ($temas as $tema) {
+							?>
+								<option value="<?php echo $tema[0] ?>"><?php echo $tema[2] ?></option>
+							<?php
+						} */
+						?>
+                            <option>Planetas del sistema solar</option>
+                            <option>Eclipses</option>
+                            <option>Fases de la luna</option>
+                            <option>El día y la noche</option>
+                        </select>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -258,9 +269,7 @@ $(document).ready(function(){
 					$('#message').html(data);
 
           			/* setTimeout(function(){
-
             			$('#message').html('');
-
           			}, 5000); */
 
         		}

@@ -21,7 +21,7 @@ include('header.php');
 ?>
 
                     <!-- Page Heading -->
-                    <h1 class="h3 mb-4 text-gray-800">Gestión de usuarios</h1>
+                    <h1 class="h3 mb-4 text-gray-800">Gestión de profesores</h1>
 
                     <!-- DataTales Example -->
                     <span id="message"></span>
@@ -29,7 +29,7 @@ include('header.php');
                         <div class="card-header py-3">
                         	<div class="row">
                             	<div class="col">
-                            		<h6 class="m-0 font-weight-bold text-primary">Lista de usuarios</h6>
+                            		<h6 class="m-0 font-weight-bold text-primary">Lista de profesores</h6>
                             	</div>
                             	<div class="col" align="right">
                             		<button type="button" name="add_user" id="add_user" class="btn btn-success btn-circle btn-sm"><i class="fas fa-plus"></i></button>

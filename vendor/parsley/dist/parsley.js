@@ -2382,18 +2382,18 @@
 
   // This is included with the Parsley library itself,
   Parsley.addMessages('en', {
-    defaultMessage: "This value seems to be invalid.",
+    defaultMessage: "Este valor no es válido.",
     type: {
-      email: "This value should be a valid email.",
+      email: "Este valor debería ser un correo válido.",
       url: "This value should be a valid url.",
       number: "This value should be a valid number.",
-      integer: "This value should be a valid integer.",
+      integer: "Este valor debería ser un número válido.",
       digits: "This value should be digits.",
       alphanum: "This value should be alphanumeric."
     },
     notblank: "This value should not be blank.",
     required: "This value is required.",
-    pattern: "This value seems to be invalid.",
+    pattern: "Este valor no es válido.",
     min: "This value should be greater than or equal to %s.",
     max: "This value should be lower than or equal to %s.",
     range: "This value should be between %s and %s.",

@@ -17,31 +17,33 @@ $object = new srms(); */
 } */
 
 include('header.php');
+$clases = obtenerClasesTeacher($con, $user[0]);
 
 ?>
 
 
-                <div class="container-fluid card-style">
+                <div class="container-fluid card-style mb-5 pb-4">
 
                     <!-- Page Heading -->
-                    <h1 class="h3 mt-2 mb-4 text-gray-800">Gestión de clases</h1>
+					<div class="row">
+						<div class="col" align="left">
+							<h1 class="h3 mt-2 mb-4 text-gray-800">Gestión de clases</h1>
+                        </div>
+						<div class="col" align="right">
+							<button type="button" name="add_class" id="add_class" class="btn btn-info btn-sm mt-3 mr-2">Crear una nueva clase&nbsp;&nbsp;<i class="fas fa-plus"></i></button>
+                        </div>
+					</div>
+                    
 
                     <!-- DataTales Example -->
                     <span id="message"></span>
-                    <div class="card shadow mb-4">
-                        <div class="card-header py-3">
-                        	<div class="row">
-                            	<!-- <div class="col">
-                            		<h6 class="m-0 font-weight-bold text-primary"></h6>
-                            	</div> -->
-                            	<div class="col" align="left">
-                            		<button type="button" name="add_class" id="add_class" class="btn btn-info btn-sm">Crear una nueva clase&nbsp;&nbsp;<i class="fas fa-plus"></i></button>
-                            	</div>
-                            </div>
-                        </div>
+					<input type="hidden" name="teacher_id" id="teacher_id" data-id="<?php echo $user[0] ?>" />
+                    <div class="card">
+                        
                         <div class="card-body">
                             <div class="table-responsive">
                                 <table class="table table-bordered" id="class_table" width="100%" cellspacing="0">
+								
                                     <thead>
                                         <tr>
                                             <th>Nombre de la clase</th>
@@ -53,7 +55,66 @@ include('header.php');
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        
+									<?php
+                        
+									if(!empty($clases)){
+
+										foreach ($clases as $clase) : 
+
+											$id_clase = $clase[0];
+											$temas = obtenerTemas($con, $id_clase);
+									?>
+										<tr>
+										<td><?php echo $clase[1] ?></td>
+										<td><?php
+
+											$output = array();
+											foreach ($temas as $tema) : 
+												$output[] = $tema[2];
+											endforeach;
+											echo implode(', ', $output);
+										?>
+										</td>
+										<td align="center">
+										<?php
+											echo '<button type="button" name="add_subject" data-id="" class="btn btn-info btn-sm add_subject"><i class="fas fa-plus"></i> Tema</button>';
+										?>
+										</td>
+										<td align="center">
+										<?php
+											echo '<a href="subject.php?action=view&class=" class="btn btn-secondary btn-sm"><i class="fas fa-edit"></i> Tema</a>';
+										?>
+										</td>
+										<td align="center">
+										<?php
+
+										if($clase[3] == 'Habilitado')
+										{
+											echo ('<button type="button" name="status_button" class="btn btn-primary btn-sm status_button" data-id="'.$clase[0].'" data-status="'.$clase[3].'">Habilitado</button>');
+										}
+										else
+										{
+											echo ('<button type="button" name="status_button" class="btn btn-danger btn-sm status_button" data-id="'.$clase[0].'" data-status="'.$clase[3].'">Deshabilitado</button>');
+										}
+										?>
+										</td>
+
+										<td>
+										<?php
+										echo ('<div align="center">
+											<button type="button" name="edit_button" class="btn btn-warning btn-circle btn-sm edit_button" data-id="'.$clase[0].'"><i class="fas fa-edit"></i></button>
+											&nbsp;
+											<button type="button" name="delete_button" class="btn btn-danger btn-circle btn-sm delete_button" data-id="'.$clase[0].'"><i class="fas fa-times"></i></button>
+											</div>
+											');
+										?>
+										</td>
+
+										</tr>
+									<?php
+										endforeach;
+										}
+									?>
                                     </tbody>
                                 </table>
                             </div>
@@ -107,6 +168,14 @@ include('header.php');
                         <label>Nombre del tema</label>
                         <!-- <input type="text" name="subject_name" id="subject_name" class="form-control" required data-parsley-pattern="/^[a-zA-Z0-9 \s]+$/" data-parsley-trigger="keyup" /> -->
                         <select type="text" name="subject_name" id="subject_name" class="form-control" data-parsley-trigger="keyup">
+
+						<?php
+							/* foreach ($temas as $tema) {
+							?>
+								<option value="<?php echo $tema[0] ?>"><?php echo $tema[2] ?></option>
+							<?php
+						} */
+						?>
                             <option>Planetas del sistema solar</option>
                             <option>Eclipses</option>
                             <option>Fases de la luna</option>
@@ -129,14 +198,15 @@ include('header.php');
 <script>
 $(document).ready(function(){
 
-	var dataTable = $('#class_table').DataTable({
+	var teacher_id = $('#teacher_id').data('id');
+	/* var dataTable = $('#class_table').DataTable({
 		"processing" : true,
 		"serverSide" : true,
 		"order" : [],
 		"ajax" : {
 			url:"classes_action.php",
 			type:"POST",
-			data:{action:'fetch'}
+			data:{action:'fetch', teacher_id:teacher_id}
 		},
 		"columnDefs":[
 			{
@@ -144,7 +214,7 @@ $(document).ready(function(){
 				"orderable":false,
 			},
 		],
-	});
+	}); */
 
 	$('#add_class').click(function(){
 		

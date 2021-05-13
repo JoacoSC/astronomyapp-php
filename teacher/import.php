@@ -28,7 +28,7 @@ class MyReadFilter implements \PhpOffice\PhpSpreadsheet\Reader\IReadFilter {
 
     public function readCell($column, $row, $worksheetName = '') {
         // Read title row and rows 20 - 30
-        if ($row >= 40 && $row<=43) {
+        if ($row >= 10 && $row<=18) {
             return true;
         }
         return false;
