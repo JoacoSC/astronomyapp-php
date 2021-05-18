@@ -69,20 +69,26 @@ $clases = obtenerClasesTeacher($con, $user[0]);
 										<td><?php
 
 											$output = array();
-											foreach ($temas as $tema) : 
-												$output[] = $tema[2];
-											endforeach;
-											echo implode(', ', $output);
+											if(!empty($temas)){
+												foreach ($temas as $tema) : 
+													$output[] = $tema[2];
+												endforeach;
+												echo implode(', ', $output);
+											}else{
+												echo (" - ");
+											}
+											
+											
 										?>
 										</td>
 										<td align="center">
 										<?php
-											echo '<button type="button" name="add_subject" data-id="" class="btn btn-info btn-sm add_subject"><i class="fas fa-plus"></i> Tema</button>';
+											echo '<button type="button" name="add_subject" data-id="'.$clase[0].'" class="btn btn-info btn-sm add_subject"><i class="fas fa-plus"></i> Tema</button>';
 										?>
 										</td>
 										<td align="center">
 										<?php
-											echo '<a href="subject.php?action=view&class=" class="btn btn-secondary btn-sm"><i class="fas fa-edit"></i> Tema</a>';
+											echo '<a href="subject.php?action=view&class='.$clase[2].'" class="btn btn-secondary btn-sm"><i class="fas fa-edit"></i> Tema</a>';
 										?>
 										</td>
 										<td align="center">
@@ -101,7 +107,7 @@ $clases = obtenerClasesTeacher($con, $user[0]);
 
 										<td>
 										<?php
-										echo ('<div align="center">
+										echo ('<div class="action_buttons" align="center">
 											<button type="button" name="edit_button" class="btn btn-warning btn-circle btn-sm edit_button" data-id="'.$clase[0].'"><i class="fas fa-edit"></i></button>
 											&nbsp;
 											<button type="button" name="delete_button" class="btn btn-danger btn-circle btn-sm delete_button" data-id="'.$clase[0].'"><i class="fas fa-times"></i></button>
@@ -199,6 +205,7 @@ $clases = obtenerClasesTeacher($con, $user[0]);
 $(document).ready(function(){
 
 	var teacher_id = $('#teacher_id').data('id');
+	
 	/* var dataTable = $('#class_table').DataTable({
 		"processing" : true,
 		"serverSide" : true,
@@ -262,13 +269,14 @@ $(document).ready(function(){
 					{
 						$('#classModal').modal('hide');
 						$('#message').html(data.success);
-						dataTable.ajax.reload();
+						/* dataTable.ajax.reload(); */
 
-						/* setTimeout(function(){
+						setTimeout(function(){
 
 				            $('#message').html('');
+							location.reload();
 
-				        }, 5000); */
+				        }, 1000);
 					}
 				}
 			})
@@ -336,14 +344,15 @@ $(document).ready(function(){
         		success:function(data)
         		{
 
-          			dataTable.ajax.reload();
+          			/* dataTable.ajax.reload(); */
 					$('#message').html(data);
 
-          			/* setTimeout(function(){
+          			setTimeout(function(){
 
             			$('#message').html('');
+						location.reload();
 
-          			}, 5000); */
+          			}, 1000);
 
         		}
 
@@ -372,13 +381,14 @@ $(document).ready(function(){
 
           			$('#message').html(data);
 
-          			dataTable.ajax.reload();
+          			/* dataTable.ajax.reload(); */
 
-          			/* setTimeout(function(){
+          			setTimeout(function(){
 
             			$('#message').html('');
+						location.reload();
 
-          			}, 5000); */
+          			}, 1000);
 
         		}
 
@@ -438,13 +448,14 @@ $(document).ready(function(){
                     {
                         $('#subjectModal').modal('hide');
                         $('#message').html(data.success);
-                        dataTable.ajax.reload();
+                        /* dataTable.ajax.reload(); */
 
-                        /* setTimeout(function(){
+                        setTimeout(function(){
 
                             $('#message').html('');
+							location.reload();
 
-                        }, 5000); */
+                        }, 1000);
                     }
                 }
             })

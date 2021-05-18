@@ -18,8 +18,13 @@ if(!$object->is_master_user())
 
 include('header.php');
 
-?>
+include ('../helper.php');
 
+$profesores = obtenerProfesoresAdmin($con);
+$clases = obtenerClasesAdmin($con);
+
+?>
+<div class="container-fluid card-style mb-5 pb-4">
                     <!-- Page Heading -->
 					<div class="row">
 						<div class="col" align="left">
@@ -39,7 +44,8 @@ include('header.php');
                                     <thead>
                                         <tr>
                                             <th>Nombre de la clase</th>
-                                            <th>Tema</th>
+                                            <th style="min-width:200px;">Tema</th>
+											<th>Profesor de la clase</th>
                                             <th>Añadir tema</th>
                                             <th>Editar tema</th>
                                             <th>Estado</th>
@@ -47,7 +53,84 @@ include('header.php');
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        
+									<?php
+                        
+									if(!empty($clases)){
+
+										foreach ($clases as $clase) : 
+
+											$id_clase = $clase[0];
+											$temas = obtenerTemas($con, $id_clase);
+									?>
+										<tr>
+										<td><?php echo $clase[1] ?></td>
+										<td><?php
+
+											$output = array();
+											if(!empty($temas)){
+												foreach ($temas as $tema) : 
+													$output[] = $tema[2];
+												endforeach;
+												echo implode(', ', $output);
+											}else{
+												echo (" - ");
+											}
+											
+											
+										?>
+										</td>
+										<td>
+											<?php
+												$teacher_array = obtenerProfesorDeLaClase($con, $id_clase);
+												
+												if(!empty($teacher_array)){
+													echo ($teacher_array[1]." ".$teacher_array[2]." ".$teacher_array[3]." - (".$teacher_array[6].")");
+												}else{
+													echo (" - ");
+												}
+
+											?>
+										</td>
+										<td align="center">
+										<?php
+											echo '<button type="button" name="add_subject" data-id="'.$clase[0].'" class="btn btn-info btn-sm add_subject"><i class="fas fa-plus"></i> Tema</button>';
+										?>
+										</td>
+										<td align="center">
+										<?php
+											echo '<a href="subject.php?action=view&class='.$clase[2].'" class="btn btn-secondary btn-sm"><i class="fas fa-edit"></i> Tema</a>';
+										?>
+										</td>
+										<td align="center">
+										<?php
+
+										if($clase[3] == 'Habilitado')
+										{
+											echo ('<button type="button" name="status_button" class="btn btn-primary btn-sm status_button" data-id="'.$clase[0].'" data-status="'.$clase[3].'">Habilitado</button>');
+										}
+										else
+										{
+											echo ('<button type="button" name="status_button" class="btn btn-danger btn-sm status_button" data-id="'.$clase[0].'" data-status="'.$clase[3].'">Deshabilitado</button>');
+										}
+										?>
+										</td>
+
+										<td>
+										<?php
+										echo ('<div class="action_buttons" align="center">
+											<button type="button" name="edit_button" class="btn btn-warning btn-circle btn-sm edit_button" data-id="'.$clase[0].'"><i class="fas fa-edit"></i></button>
+											&nbsp;
+											<button type="button" name="delete_button" class="btn btn-danger btn-circle btn-sm delete_button" data-id="'.$clase[0].'"><i class="fas fa-times"></i></button>
+											</div>
+											');
+										?>
+										</td>
+
+										</tr>
+									<?php
+										endforeach;
+										}
+									?>
                                     </tbody>
                                 </table>
                             </div>
@@ -72,6 +155,20 @@ include('header.php');
 		          		<label>Nombre de la clase</label>
 		          		<input type="text" name="class_name" id="class_name" class="form-control" required  data-parsley-trigger="keyup" />
 		          	</div>
+					<div class="form-group">
+		          		<label>Profesor de la clase</label>
+		          		<select type="text" name="class_teacher" id="class_teacher" class="form-control" data-parsley-trigger="keyup">
+
+							<?php
+								foreach ($profesores as $profesor) {
+								?>
+									<option value="<?php echo $profesor[0] ?>"><?php echo $profesor[1].' '.$profesor[2].' '.$profesor[3].' - ('.$profesor[6].')' ?></option>
+								<?php
+							}
+							?>
+						</select>
+		          	</div>
+					  
         		</div>
         		<div class="modal-footer">
           			<input type="hidden" name="hidden_id" id="hidden_id" />
@@ -129,7 +226,7 @@ include('header.php');
 $(document).ready(function(){
 
 	var dataTable = $('#class_table').DataTable({
-		"processing" : true,
+		/* "processing" : true,
 		"serverSide" : true,
 		"order" : [],
 		"ajax" : {
@@ -142,7 +239,14 @@ $(document).ready(function(){
 				"targets":[2, 3, 5],
 				"orderable":false,
 			},
-		],
+		], */
+		scrollX:        true,
+        scrollCollapse: true,
+        paging:         true,
+        fixedColumns:   {
+            leftColumns: 0,
+            rightColumns: 4
+        }
 	});
 
 	$('#add_class').click(function(){
@@ -185,19 +289,20 @@ $(document).ready(function(){
 					if(data.error != '')
 					{
 						$('#form_message').html(data.error);
-						$('#submit_button').val('Add');
+						$('#submit_button').val('Agregar');
 					}
 					else
 					{
 						$('#classModal').modal('hide');
 						$('#message').html(data.success);
-						dataTable.ajax.reload();
+						/* dataTable.ajax.reload(); */
 
 						setTimeout(function(){
 
-				            $('#message').html('');
+						$('#message').html('');
+						location.reload();
 
-				        }, 5000);
+						}, 1000);
 					}
 				}
 			})
@@ -226,6 +331,8 @@ $(document).ready(function(){
 	      	{
 
 	        	$('#class_name').val(data.class_name);
+
+				$('#class_teacher').val(data.class_teacher);
 
 	        	$('#modal_title').text('Editar Clase');
 
@@ -265,12 +372,14 @@ $(document).ready(function(){
         		success:function(data)
         		{
 
-          			dataTable.ajax.reload();
+          			/* dataTable.ajax.reload(); */
 					$('#message').html(data);
 
-          			/* setTimeout(function(){
+          			setTimeout(function(){
             			$('#message').html('');
-          			}, 5000); */
+						location.reload();
+
+          			}, 1000);
 
         		}
 
@@ -299,13 +408,14 @@ $(document).ready(function(){
 
           			$('#message').html(data);
 
-          			dataTable.ajax.reload();
+          			/* dataTable.ajax.reload(); */
 
           			setTimeout(function(){
 
             			$('#message').html('');
+						location.reload();
 
-          			}, 5000);
+          			}, 1000);
 
         		}
 
@@ -365,13 +475,14 @@ $(document).ready(function(){
                     {
                         $('#subjectModal').modal('hide');
                         $('#message').html(data.success);
-                        dataTable.ajax.reload();
+                        /* dataTable.ajax.reload(); */
 
                         setTimeout(function(){
 
                             $('#message').html('');
+							location.reload();
 
-                        }, 5000);
+                        }, 1000);
                     }
                 }
             })

@@ -147,7 +147,7 @@ if(isset($_POST["hidden_action"]))
 
 			$object->execute($data);
 
-			$success = '<div class="alert alert-success">Tema añadido en la clase <b>'.$object->Get_class_name($_POST["class_id"]).'</b></div>';
+			$success = '<div class="alert alert-success">Añadiendo tema en la clase <b>'.$object->Get_class_name($_POST["class_id"]).'</b>...</div>';
 		}
 
 		$output = array(

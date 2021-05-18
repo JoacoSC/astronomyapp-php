@@ -16,6 +16,7 @@ class srms
 
 		session_start();
 
+		date_default_timezone_set("America/Santiago");
 		$this->now = date("Y-m-d H:i:s",  STRTOTIME(date('h:i:sa')));
 	}
 

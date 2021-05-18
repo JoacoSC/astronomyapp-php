@@ -2,7 +2,7 @@
 
 //import.php
 session_start();
-include '../vendor/autoload.php';
+include ('../vendor/autoload.php');
 require ('../connection.php');
 include ('../helper.php');
 
@@ -10,16 +10,16 @@ $user = array();
 
     
     if(isset($_SESSION['id'])){
-        /* print "entré"; */
+        /* echo "entré"; */
         
         $user = get_user_info($con, $_SESSION['id']);
-        /* echo $user[0];
-        echo isset($user[0]); */
+        /* echo $user[0]; */
+        
         /* foreach ($user as $key => $value) {
             echo "Key: $key; Value: $value\n<br>";
         } */
     }
-
+    
 
 /* require 'connection.php'; */
 /* $connect = new PDO("mysql:host=localhost;dbname=astronomyapp", "root", ""); */
@@ -28,7 +28,7 @@ class MyReadFilter implements \PhpOffice\PhpSpreadsheet\Reader\IReadFilter {
 
     public function readCell($column, $row, $worksheetName = '') {
         // Read title row and rows 20 - 30
-        if ($row >= 10 && $row<=18) {
+        if ($row >= 5 && $row<=10) {
             return true;
         }
         return false;
@@ -58,7 +58,7 @@ if($_FILES["import_excel"]["name"] != '')
   $data = $spreadsheet->getActiveSheet()->toArray();
   
 /* ESTO LO CAMBIÉ */
-
+  $contador = 0;
 
   foreach($data as $row)
   {
@@ -71,8 +71,9 @@ if($_FILES["import_excel"]["name"] != '')
     $apellido_pat  = $row[2],
     $apellido_mat  = $row[3],
     $rut  = $row[4],
-    $email  = $row[5],
-    $institucion  = $row[6]
+    $dv  = $row[5],
+    $email  = $row[6],
+    $institucion  = $row[7]
     
    );
 
@@ -87,29 +88,40 @@ if($_FILES["import_excel"]["name"] != '')
 
    $email_profesor = $user['email'];
 
-   $query = "INSERT INTO student_srms (student_name, student_father_lastname, student_mother_lastname, rut, student_email_id, email_profesor, hashed_pass, institution)"; 
-   $query .= "VALUES( ?, ?, ?, ?, ?, ?, ?, ?)";
+   $query = "INSERT INTO student_srms (student_name, student_father_lastname, student_mother_lastname, rut, dv, student_email_id, hashed_pass, institution, email_profesor)"; 
+   $query .= "VALUES( ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
    $q = mysqli_stmt_init($con);
 
    mysqli_stmt_prepare($q, $query);
 
-   mysqli_stmt_bind_param($q, 'ssssssss', $nombre, $apellido_pat, $apellido_mat, $rut, $email, $email_profesor, $hashed_pass, $institucion);
+   mysqli_stmt_bind_param($q, 'sssssssss', $nombre, $apellido_pat, $apellido_mat, $rut, $dv, $email, $hashed_pass, $institucion, $email_profesor);
    
    mysqli_stmt_execute($q);
+
+   if(mysqli_stmt_affected_rows($q) > 0){
+
+        $contador++;
+    }
    
   }
-  $message = '<div class="alert alert-success">Registro ingresado correctamente</div>';
 
+  if($contador > 0){
+
+    $message = '<div class="alert alert-success"><b>Éxito! </b>Se registraron correctamente <b>'.$contador.'</b> estudiantes.</div>';
+  }else{
+
+    $message = '<div class="alert alert-danger"><b>Error! </b>Ocurrió un problema durante el registro</div>';
+  }
  }
  else
  {
-  $message = '<div class="alert alert-danger">Ingrese un archivo Excel por favor</div>';
+  $message = '<div class="alert alert-danger"><b>Error! </b>Ingrese un archivo Excel por favor</div>';
  }
 }
 else
 {
- $message = '<div class="alert alert-danger">Por favor ingrese un archivo</div>';
+ $message = '<div class="alert alert-danger"><b>Error! </b>Por favor ingrese un archivo</div>';
 }
   /* LO CAMBIÉ HASTA AQUI */
 

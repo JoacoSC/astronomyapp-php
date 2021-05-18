@@ -55,7 +55,7 @@ include('../connection.php');
                     
                 </div>
                 <!-- <i class="fas fa-laugh-wink"></i> -->
-                <div class="sidebar-brand-text mx-3">Admin Astronomyapp</div>
+                <div class="sidebar-brand-text mx-3">Administración Astronomyapp</div>
             </a>
 
             <!-- Divider -->
@@ -68,12 +68,12 @@ include('../connection.php');
             ?>
             <li class="nav-item">
                 <a class="nav-link" href="classes.php">
-                    <i class="fas fa-university"></i>
+                    <i class="fas fa-chalkboard"></i>
                     <span>Clases</span></a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="students.php">
-                    <i class="fas fa-address-book"></i>
+                    <i class="fas fa-graduation-cap"></i>
                     <span>Estudiantes</span></a>
             </li>
             <!-- <li class="nav-item">
@@ -82,21 +82,24 @@ include('../connection.php');
                     <span>Opcion C</span></a>
             </li> -->
             <li class="nav-item">
-                <a class="nav-link" href="user.php">
-                    <i class="fas fa-users-cog"></i>
+                <a class="nav-link" href="teachers.php">
+                    <i class="fas fa-chalkboard-teacher"></i>
                     <span>Profesores</span></a>
             </li>
             <?php
             }
             ?>
-            <!-- <li class="nav-item">
-                <a class="nav-link" href="subject2.php">
-                    <i class="fas fa-graduation-cap"></i>
-                    <span>Temas</span></a>
-            </li> -->
+            <li class="nav-item">
+                <a class="nav-link" href="institutions.php">
+                    <i class="fas fa-school"></i>
+                    <span>Instituciones</span></a>
+            </li>
+
+            <!-- Divider -->
+            <hr class="sidebar-divider my-0">
             
             <!-- Sidebar Toggler (Sidebar) -->
-            <div class="text-center d-none d-md-inline">
+            <div class="text-center d-none d-md-inline mt-3">
                 <button class="rounded-circle border-0" id="sidebarToggle"></button>
             </div>
 
@@ -183,4 +186,4 @@ include('../connection.php');
                 <!-- End of Topbar -->
 
                 <!-- Begin Page Content -->
-                <div class="container-fluid card-style mb-5 pb-4">
+                

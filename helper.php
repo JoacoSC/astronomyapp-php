@@ -44,7 +44,7 @@ function get_user_info($con, $id){
         return $row;
     }else{
 
-        $query = "SELECT id, nombre, apellido_pat, apellido_mat, rut, email, contraseña, institucion, telefono, fecha_nac, region, comuna, role FROM student_srms WHERE id=?";
+        $query = "SELECT * FROM student_srms WHERE student_id=?";
         $q = mysqli_stmt_init($con);
 
         mysqli_stmt_prepare($q, $query);
@@ -234,7 +234,7 @@ function actualizarPerfil($con, $id){
 
 function obtenerTemas($con, $id_clase){
 
-    $query = "SELECT * FROM subject_srms WHERE class_id = ?";
+    $query = "SELECT * FROM subject_srms WHERE class_id = ? AND subject_status= 'Habilitado'";
 
     $q = mysqli_stmt_init($con);
 
@@ -242,6 +242,145 @@ function obtenerTemas($con, $id_clase){
 
     // bind the statement
     mysqli_stmt_bind_param($q, 'i', $id_clase);
+
+    // execute sql statement
+    mysqli_stmt_execute($q);
+    $result = mysqli_stmt_get_result($q);
+
+    $row = mysqli_fetch_all($result);
+
+    /* return empty($row) ? false : $row; */
+
+    if(!empty($row)){
+
+        return $row;
+    }else{
+
+        return false;
+    }
+}
+
+function contarClasesAdmin($con){
+
+    $query = "SELECT COUNT(*) FROM class_srms";
+
+    $q = mysqli_stmt_init($con);
+
+    mysqli_stmt_prepare($q, $query);
+
+    // bind the statement
+    /* mysqli_stmt_bind_param($q, 's', $email); */
+
+    // execute sql statement
+    mysqli_stmt_execute($q);
+    $result = mysqli_stmt_get_result($q);
+
+    $row = mysqli_fetch_array($result);
+
+    /* return empty($row) ? false : $row; */
+
+    if(!empty($row)){
+
+        return $row;
+    }else{
+
+        return false;
+    }
+}
+
+function contarEstudiantesAdmin($con){
+
+    $query = "SELECT COUNT(*) FROM student_srms";
+
+    $q = mysqli_stmt_init($con);
+
+    mysqli_stmt_prepare($q, $query);
+
+    // bind the statement
+    /* mysqli_stmt_bind_param($q, 's', $email); */
+
+    // execute sql statement
+    mysqli_stmt_execute($q);
+    $result = mysqli_stmt_get_result($q);
+
+    $row = mysqli_fetch_array($result);
+
+    /* return empty($row) ? false : $row; */
+
+    if(!empty($row)){
+
+        return $row;
+    }else{
+
+        return false;
+    }
+}
+
+function contarProfesoresAdmin($con){
+
+    $query = "SELECT COUNT(*) FROM teacher_srms";
+
+    $q = mysqli_stmt_init($con);
+
+    mysqli_stmt_prepare($q, $query);
+
+    // bind the statement
+    /* mysqli_stmt_bind_param($q, 's', $email); */
+
+    // execute sql statement
+    mysqli_stmt_execute($q);
+    $result = mysqli_stmt_get_result($q);
+
+    $row = mysqli_fetch_array($result);
+
+    /* return empty($row) ? false : $row; */
+
+    if(!empty($row)){
+
+        return $row;
+    }else{
+
+        return false;
+    }
+}
+
+function contarInstitucionesAdmin($con){
+
+    $query = "SELECT COUNT(*) FROM institution_srms";
+
+    $q = mysqli_stmt_init($con);
+
+    mysqli_stmt_prepare($q, $query);
+
+    // bind the statement
+    /* mysqli_stmt_bind_param($q, 's', $email); */
+
+    // execute sql statement
+    mysqli_stmt_execute($q);
+    $result = mysqli_stmt_get_result($q);
+
+    $row = mysqli_fetch_array($result);
+
+    /* return empty($row) ? false : $row; */
+
+    if(!empty($row)){
+
+        return $row;
+    }else{
+
+        return false;
+    }
+}
+
+function obtenerClasesAdmin($con){
+    $query = "SELECT * FROM class_srms";
+
+    $q = mysqli_stmt_init($con);
+
+    mysqli_stmt_prepare($q, $query);
+
+    // bind the statement
+    /* mysqli_stmt_bind_param($q, 's', $teacher_id); */
 
     // execute sql statement
     mysqli_stmt_execute($q);
@@ -287,6 +426,138 @@ function obtenerEstudiantesAdmin($con){
     }
 }
 
+function obtenerProfesoresAdmin($con){
+
+    $query = "SELECT * FROM teacher_srms";
+
+    $q = mysqli_stmt_init($con);
+
+    mysqli_stmt_prepare($q, $query);
+
+    // bind the statement
+    /* mysqli_stmt_bind_param($q, 's', $email); */
+
+    // execute sql statement
+    mysqli_stmt_execute($q);
+    $result = mysqli_stmt_get_result($q);
+
+    $row = mysqli_fetch_all($result);
+
+    /* return empty($row) ? false : $row; */
+
+    if(!empty($row)){
+
+        return $row;
+    }else{
+
+        return false;
+    }
+}
+
+function obtenerInstitucionesAdmin($con){
+
+    $query = "SELECT * FROM institution_srms";
+
+    $q = mysqli_stmt_init($con);
+
+    mysqli_stmt_prepare($q, $query);
+
+    // bind the statement
+    /* mysqli_stmt_bind_param($q, 's', $email); */
+
+    // execute sql statement
+    mysqli_stmt_execute($q);
+    $result = mysqli_stmt_get_result($q);
+
+    $row = mysqli_fetch_all($result);
+
+    /* return empty($row) ? false : $row; */
+
+    if(!empty($row)){
+
+        return $row;
+    }else{
+
+        return false;
+    }
+}
+
+function obtenerInstitucionTablaAdmin($con, $inst_id){
+    $query = "SELECT * FROM institution_srms WHERE institution_id = ?";
+
+    $q = mysqli_stmt_init($con);
+
+    mysqli_stmt_prepare($q, $query);
+
+    // bind the statement
+    mysqli_stmt_bind_param($q, 's', $inst_id);
+
+    // execute sql statement
+    mysqli_stmt_execute($q);
+    $result = mysqli_stmt_get_result($q);
+
+    $row = mysqli_fetch_all($result);
+
+    /* return empty($row) ? false : $row; */
+
+    if(!empty($row)){
+
+        return $row;
+    }else{
+
+        return false;
+    }
+}
+
+function obtenerProfesorDeLaClase($con, $class_id){
+
+    /* OBTENIENDO EL ID DEL PROFESOR */
+
+    $query = "SELECT class_teacher FROM class_srms WHERE class_id = ?";
+
+    $q = mysqli_stmt_init($con);
+
+    mysqli_stmt_prepare($q, $query);
+
+    // bind the statement
+    mysqli_stmt_bind_param($q, 'i', $class_id);
+
+    // execute sql statement
+    mysqli_stmt_execute($q);
+    $result = mysqli_stmt_get_result($q);
+
+    $row = mysqli_fetch_array($result);
+
+    $class_teacher = $row[0];
+
+    /* OBTENIENDO EL ID DEL PROFESOR */
+
+    /* OBTENIENDO EL NOMBRE E EMAIL DEL PROFESOR */
+
+    $query = "SELECT * FROM teacher_srms WHERE id = ?";
+
+    $q = mysqli_stmt_init($con);
+
+    mysqli_stmt_prepare($q, $query);
+
+    // bind the statement
+    mysqli_stmt_bind_param($q, 'i', $class_teacher);
+
+    // execute sql statement
+    mysqli_stmt_execute($q);
+    $result = mysqli_stmt_get_result($q);
+
+    $row = mysqli_fetch_array($result);
+
+    if(!empty($row)){
+
+        return $row;
+    }else{
+
+        return false;
+    }
+}
+
 function obtenerClasesTeacher($con, $teacher_id){
     $query = "SELECT * FROM class_srms WHERE class_teacher = ?";
 
@@ -311,5 +582,111 @@ function obtenerClasesTeacher($con, $teacher_id){
     }else{
 
         return false;
+    }
+}
+
+function obtenerClasesHabilitadasTeacher($con, $teacher_id){
+    $query = "SELECT * FROM class_srms WHERE class_teacher = ? AND class_status = 'Habilitado'";
+
+    $q = mysqli_stmt_init($con);
+
+    mysqli_stmt_prepare($q, $query);
+
+    // bind the statement
+    mysqli_stmt_bind_param($q, 's', $teacher_id);
+
+    // execute sql statement
+    mysqli_stmt_execute($q);
+    $result = mysqli_stmt_get_result($q);
+
+    $row = mysqli_fetch_all($result);
+
+    /* return empty($row) ? false : $row; */
+
+    if(!empty($row)){
+
+        return $row;
+    }else{
+
+        return false;
+    }
+}
+
+function obtenerInstituciones($con){
+
+    $query = "SELECT * FROM institution_srms";
+
+    $q = mysqli_stmt_init($con);
+
+    mysqli_stmt_prepare($q, $query);
+
+    // bind the statement
+    /* mysqli_stmt_bind_param($q, 'i', $id_clase); */
+
+    // execute sql statement
+    mysqli_stmt_execute($q);
+    $result = mysqli_stmt_get_result($q);
+
+    $row = mysqli_fetch_all($result);
+
+    /* return empty($row) ? false : $row; */
+
+    if(!empty($row)){
+
+        return $row;
+    }else{
+
+        return false;
+    }
+}
+
+function cantidadDeInscritosAInstitucion($con, $institution_id){
+
+    /* *********** REVISANDO PROFESORES ************* */
+    $row_count = 0;
+
+    $query = "SELECT institution FROM teacher_srms WHERE institution = ?";
+
+    $q = mysqli_stmt_init($con);
+
+    mysqli_stmt_prepare($q, $query);
+
+    // bind the statement
+    mysqli_stmt_bind_param($q, 'i', $institution_id);
+
+    // execute sql statement
+    mysqli_stmt_execute($q);
+
+    $result = mysqli_stmt_get_result($q);
+
+    $row_count_teachers = mysqli_num_rows($result);
+
+    /* *********** REVISANDO ESTUDIANTES ************* */
+
+    $query = "SELECT institution FROM student_srms WHERE institution = ?";
+
+    $q = mysqli_stmt_init($con);
+
+    mysqli_stmt_prepare($q, $query);
+
+    // bind the statement
+    mysqli_stmt_bind_param($q, 'i', $institution_id);
+
+    // execute sql statement
+    mysqli_stmt_execute($q);
+
+    $result = mysqli_stmt_get_result($q);
+
+    $row_count_students = mysqli_num_rows($result);
+
+    $row_count = $row_count_teachers + $row_count_students;
+
+
+    if(!empty($row_count)){
+
+        return $row_count;
+    }else{
+
+        return 0;
     }
 }

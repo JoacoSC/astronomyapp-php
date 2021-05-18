@@ -78,7 +78,7 @@ if(isset($_POST["action"]))
 			}
 			$sub_array[] = $status;
 			$sub_array[] = '
-			<div align="center">
+			<div class="action_buttons" align="center">
 			<button type="button" name="edit_button" class="btn btn-warning btn-circle btn-sm edit_button" data-id="'.$row["class_id"].'"><i class="fas fa-edit"></i></button>
 			&nbsp;
 			<button type="button" name="delete_button" class="btn btn-danger btn-circle btn-sm delete_button" data-id="'.$row["class_id"].'"><i class="fas fa-times"></i></button>
@@ -104,7 +104,7 @@ if(isset($_POST["action"]))
 
 		$success = '';
 
-		$data = array(
+		/* $data = array(
 			':class_name'	=>	$_POST["class_name"]
 		);
 
@@ -120,26 +120,27 @@ if(isset($_POST["action"]))
 			$error = '<div class="alert alert-danger alert-dismissible fade show">Ese nombre de clase ya existe!</div>';
 		}
 		else
-		{
+		{ */
 			$data = array(
 				':class_name'			=>	$object->clean_input($_POST["class_name"]),
 				':class_code'			=>	md5(uniqid()),
 				':class_status'			=>	'Habilitado',
+				':class_teacher'		=>	$_POST["class_teacher"],
 				':class_created_on'		=>	$object->now
 			);
 
 			$object->query = "
 			INSERT INTO class_srms 
-			(class_name, class_code, class_status, class_created_on) 
-			VALUES (:class_name, :class_code, :class_status, :class_created_on)
+			(class_name, class_code, class_status, class_teacher, class_created_on) 
+			VALUES (:class_name, :class_code, :class_status, :class_teacher, :class_created_on)
 			";
 
 			$object->execute($data);
 
-			$success = '<div class="alert alert-success alert-dismissible fade show">Clase creada<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+			$success = '<div class="alert alert-success alert-dismissible fade show">Creando clase...<button type="button" class="close" data-dismiss="alert" aria-label="Close">
 			<span aria-hidden="true">&times;</span>
 		  </button></div>';
-		}
+		/* } */
 
 		$output = array(
 			'error'		=>	$error,
@@ -164,6 +165,7 @@ if(isset($_POST["action"]))
 		foreach($result as $row)
 		{
 			$data['class_name'] = $row['class_name'];
+			$data['class_teacher'] = $row['class_teacher'];
 		}
 
 		echo json_encode($data);
@@ -175,7 +177,7 @@ if(isset($_POST["action"]))
 
 		$success = '';
 
-		$data = array(
+		/* $data = array(
 			':class_name'	=>	$_POST["class_name"],
 			':class_id'		=>	$_POST['hidden_id']
 		);
@@ -193,22 +195,26 @@ if(isset($_POST["action"]))
 			$error = '<div class="alert alert-danger alert-dismissible fade show">Ese nombre de clase ya existe!</div>';
 		}
 		else
-		{
+		{ */
 
 			$data = array(
-				':class_name'		=>	$object->clean_input($_POST["class_name"])
+				':class_name'		=>	$object->clean_input($_POST["class_name"]),
+				':class_teacher'	=>	$_POST["class_teacher"]
 			);
 
 			$object->query = "
 			UPDATE class_srms 
-			SET class_name = :class_name 
+			SET class_name = :class_name,
+			class_teacher = :class_teacher
 			WHERE class_id = '".$_POST['hidden_id']."'
 			";
 
 			$object->execute($data);
 
-			$success = '<div class="alert alert-success alert-dismissible fade show">Clase actualizada</div>';
-		}
+			$success = '<div class="alert alert-success alert-dismissible fade show">Actualizando clase... <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+			<span aria-hidden="true">&times;</span>
+		</button></div>';
+		/* } */
 
 		$output = array(
 			'error'		=>	$error,
@@ -233,7 +239,7 @@ if(isset($_POST["action"]))
 
 		$object->execute($data);
 
-		echo '<div class="alert alert-success alert-dismissible fade show">Estado de la clase cambiado a '.$_POST['next_status'].'<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+		echo '<div class="alert alert-success alert-dismissible fade show">Cambiando estado de la clase a '.$_POST['next_status'].'...<button type="button" class="close" data-dismiss="alert" aria-label="Close">
 		<span aria-hidden="true">&times;</span>
 	  </button></div>';
 	}
@@ -247,7 +253,21 @@ if(isset($_POST["action"]))
 
 		$object->execute();
 
-		echo '<div class="alert alert-success alert-dismissible fade show">Clase eliminada</div>';
+		$class_id = $_POST["id"];
+
+		$query = "DELETE FROM subject_srms WHERE class_id = ?";
+
+		$q = mysqli_stmt_init($con);
+
+		mysqli_stmt_prepare($q, $query);
+
+		mysqli_stmt_bind_param($q, 'i', $class_id);
+		
+		mysqli_stmt_execute($q);
+
+		echo '<div class="alert alert-success alert-dismissible fade show">Eliminando clase...<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+		<span aria-hidden="true">&times;</span>
+	  </button></div>';
 	}
 }
 

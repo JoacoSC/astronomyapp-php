@@ -24,20 +24,20 @@
 
                     
                     <!-- Content Row -->
-                    <div class="row">
+                    <div class="row mt-2">
 
                         <!-- Content Column -->
                         
-                        <div class="col-6 mt-5 mb-4">
-                            <div class="card bg-info text-white shadow">
+                        <div class="col-6">
+                            <div class="card bg-info text-white">
                                 <div class="card-body text-center">
                                 Crear una clase
                                 </div>
                                 <a href="clases.php" class="stretched-link"></a>
                             </div>
                         </div>
-                        <div class="col-6 mt-5 mb-4">
-                            <div class="card bg-start-class text-white shadow">
+                        <div class="col-6">
+                            <div class="card bg-start-class text-white">
                                 <div class="card-body text-center">
                                 Comenzar una clase
                                 </div>
@@ -74,7 +74,32 @@
                             <!-- ******************** DIV DE GENERACION DE GRAFICOS ********************* -->
 
                     </div>
-                    <h1 class="h3 mt-2 mb-4 text-gray-800">PONER UN SLIDER AQUI</h1>
+                    <div id="carouselExampleIndicators" class="carousel slide mt-5" data-ride="carousel">
+                        <ol class="carousel-indicators">
+                            <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+                            <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+                            <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+                        </ol>
+                        <div class="carousel-inner">
+                            <div class="carousel-item active">
+                            <img class="d-block w-100" src="../img/carousel_1.png" alt="First slide">
+                            </div>
+                            <div class="carousel-item">
+                            <img class="d-block w-100" src="../img/carousel_2.png" alt="Second slide">
+                            </div>
+                            <div class="carousel-item">
+                            <img class="d-block w-100" src="../img/carousel_3.png" alt="Third slide">
+                            </div>
+                        </div>
+                        <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            <span class="sr-only">Previous</span>
+                        </a>
+                        <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span class="sr-only">Next</span>
+                        </a>
+                        </div>
 
                 </div>
                 <!-- /.container-fluid -->
@@ -88,9 +113,11 @@
 
 ?>            
 <script type="text/javascript">
-		$(document).ready(function() {
-			setInterval(function () {
-				$('#show').load('data.php')
-			}, 1000);
-		});
-	</script>
+    $(document).ready(function() {
+        setInterval(function () {
+            $('#show').load('data.php')
+        }, 1000);
+
+        /* $('.carousel').carousel() */
+    });
+</script>

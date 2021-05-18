@@ -30,16 +30,25 @@
         
   <div class="container-fluid card-style mb-5 pb-4">
 
-  <h1 class="h3 mt-2 mb-4 text-gray-800">Registro de estudiantes</h1>
+  <div class="row">
+						<div class="col" align="left">
+							<h1 class="h3 mt-2 mb-4 text-gray-800">Registro de estudiantes</h1>
+                        </div>
+						<div class="col" align="right">
+							<button type="button" class="btn btn-info btn-sm mt-3 mr-2" href="../excel/estudiantes.xlsx" download="estudiantes.xlsx">Descargar plantilla Excel&nbsp;&nbsp;<i class="fas fa-download"></i></button>
+                        </div>
+					</div>
+
+  <span id="message"></span>
 
     <div class="card">
       <div class="card-body">
           
-        <a class="btn btn-info btn-sm shadow-sm" href="../excel/estudiantes.xlsx" download="estudiantes.xlsx" type="button" >
+        <!-- <a class="btn btn-info btn-sm shadow-sm" href="../excel/estudiantes.xlsx" download="estudiantes.xlsx" type="button" >
         Descargar plantilla Excel
-        </a>
+        </a> -->
 
-        <div class="table-responsive">
+        <div class="table-responsive" align="center">
           <br>
           <h5>Puedes registrar varios estudiantes en 3 simples pasos:</h5><br>
           <dl>
@@ -50,7 +59,7 @@
             <dt>Paso 3:</dt>
             <dd>- Sube aquí tu archivo Excel y presiona "Registrar estudiantes"</dd>
           </dl> 
-          <span id="message"></span>
+          
           <form method="post" id="import_excel_form" enctype="multipart/form-data">
               <div class="table">
                   

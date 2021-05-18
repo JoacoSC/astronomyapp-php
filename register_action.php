@@ -24,6 +24,8 @@ if(empty($rut)){
     $error[] = "Olvidaste ingresar tu rut";
 }
 
+$dv         = $_POST['dv'];
+
 $email         = validar_input_email($_POST['email']);
 if(empty($email)){
     $error[] = "Olvidaste ingresar tu email";
@@ -49,6 +51,8 @@ if(empty($comuna)){
     $error[] = "Olvidaste ingresar tu región";
 }
 
+$inst         = $_POST['institution'];
+
 // crear nueva contraseña *******************
 $rut = $_POST['rut'];
 $nombre = $_POST['nombre'];
@@ -71,9 +75,9 @@ if(empty($error)){
     
     require ('connection.php');
 
-    $query = "INSERT INTO profesor (id, nombre, apellido_pat, apellido_mat, rut, email, contraseña, telefono, fecha_nac, region, comuna)";
+    $query = "INSERT INTO teacher_srms (nombre, apellido_pat, apellido_mat, rut, dv, email, contraseña, telefono, fecha_nac, region, comuna, institution)";
     /* VALUES ('$nombre', '$apellidoPat','$apellidoMat','$rut','$email','". md5($contraseña)."','$telefono','$fecha_nac','$region','$comuna')"); */
-    $query .= "VALUES('', ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    $query .= "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
     // initialize a statement
     $q = mysqli_stmt_init($con);
@@ -82,7 +86,7 @@ if(empty($error)){
     mysqli_stmt_prepare($q, $query);
 
     // bind values
-    mysqli_stmt_bind_param($q, 'ssssssssss', $nombre, $apellidoPat, $apellidoMat, $rut, $email, $hashed_pass, $telefono, $fecha_nac, $region, $comuna);
+    mysqli_stmt_bind_param($q, 'ssssssssssss', $nombre, $apellidoPat, $apellidoMat, $rut, $dv, $email, $hashed_pass, $telefono, $fecha_nac, $region, $comuna, $inst);
 
     // execute statement
     mysqli_stmt_execute($q);

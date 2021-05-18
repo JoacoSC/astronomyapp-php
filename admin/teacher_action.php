@@ -116,16 +116,16 @@ if(isset($_POST["action"]))
 
 		$success = '';
 		
-		$student_email_id =	$_POST["student_email"];
+		$teacher_email =	$_POST["teacher_email"];
 		
-		$query = "SELECT * FROM student_srms WHERE student_email_id = ?";
+		$query = "SELECT * FROM teacher_srms WHERE email = ?";
 
 		$q = mysqli_stmt_init($con);
 
 		mysqli_stmt_prepare($q, $query);
 
 		// bind the statement
-		mysqli_stmt_bind_param($q, 's', $student_email_id);
+		mysqli_stmt_bind_param($q, 's', $teacher_email);
 
 		// execute sql statement
 		mysqli_stmt_execute($q);
@@ -136,24 +136,56 @@ if(isset($_POST["action"]))
 		
 		if($row_count > 0)
 		{
-			$error = '<div class="alert alert-danger"><b>Error! </b>El email del estudiante ya está registrado</div>';
+			$error = '<div class="alert alert-danger"><b>Error! </b>El email del profesor ya está registrado</div>';
 		}
 		else
 		{
-			$name 		=	$_POST["student_name"];
-			$ap_pat 	=	$_POST["student_ap_pat"];
-			$ap_mat 	=	$_POST["student_ap_mat"];
+			$name 		=	$_POST["teacher_name"];
+			$ap_pat 	=	$_POST["teacher_ap_pat"];
+			$ap_mat 	=	$_POST["teacher_ap_mat"];
 			$rut 		=	$_POST["rut"];
 			$dv 		=	$_POST["dv"];
-			$email 		=	$_POST["student_email"];
-			$dob 		=	$_POST["student_dob"];
-			/* if($_POST["student_teacher_email"] != 'otro'){ */
-				$tea_email 		=	$_POST["student_teacher_email"];
-			/* }else{
-				$tea_email 		=	$_POST["other_student_teacher_email"];
-			} */
-			/* $tea_email 	=	$_POST["student_teacher_email"]; */
-			$inst 		=	$_POST["student_institution"];
+			$email 		=	$_POST["teacher_email"];
+			$dob 		=	$_POST["teacher_dob"];
+			if($_POST["teacher_institution"] != 'otro'){
+				$inst 		=	$_POST["teacher_institution"];
+			}else{
+				$inst 		=	$_POST["other_teacher_institution"];
+				$campus 		=	$_POST["other_teacher_institution_campus"];
+
+				$query = "INSERT INTO institution_srms (institution_name, institution_campus)";
+				
+				$query .= " VALUES(?, ?)";
+
+				// initialize a statement
+				$q = mysqli_stmt_init($con);
+
+				// prepare sql statement
+				mysqli_stmt_prepare($q, $query);
+
+				// bind values
+				mysqli_stmt_bind_param($q, 'ss', $inst, $campus);
+
+				// execute statement
+				mysqli_stmt_execute($q);
+
+				$query = "SELECT MAX(institution_id) FROM institution_srms";
+
+				$q = mysqli_stmt_init($con);
+
+				mysqli_stmt_prepare($q, $query);
+
+				// bind the statement
+				/* mysqli_stmt_bind_param($q, 's', $inst_id); */
+
+				// execute sql statement
+				mysqli_stmt_execute($q);
+				$result = mysqli_stmt_get_result($q);
+
+				$row = mysqli_fetch_array($result);
+
+				$inst = $row[0];
+			}
 
 			//CALCULO DE CONTRASEÑA
 			
@@ -165,9 +197,9 @@ if(isset($_POST["action"]))
 			
 			//CALCULO DE CONTRASEÑA
 
-			$query = "INSERT INTO student_srms (student_name, student_father_lastname, student_mother_lastname, rut, dv, student_email_id, student_dob, email_profesor, hashed_pass, institution)";
+			$query = "INSERT INTO teacher_srms (nombre, apellido_pat, apellido_mat, rut, dv, email, contraseña, institution, fecha_nac)";
 			/* VALUES ('$nombre', '$apellidoPat','$apellidoMat','$rut','$email','". md5($contraseña)."','$telefono','$fecha_nac','$region','$comuna')"); */
-			$query .= " VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+			$query .= " VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
 			// initialize a statement
 			$q = mysqli_stmt_init($con);
@@ -176,14 +208,14 @@ if(isset($_POST["action"]))
 			mysqli_stmt_prepare($q, $query);
 
 			// bind values
-			mysqli_stmt_bind_param($q, 'sssiisssss', $name, $ap_pat, $ap_mat, $rut, $dv, $email, $dob, $tea_email, $hashed_pass, $inst);
+			mysqli_stmt_bind_param($q, 'sssiissss', $name, $ap_pat, $ap_mat, $rut, $dv, $email, $hashed_pass, $inst, $dob);
 
 			// execute statement
 			mysqli_stmt_execute($q);
 
 			if(mysqli_stmt_affected_rows($q) == 1){
 
-				$success = '<div class="alert alert-success"><b>Éxito! </b>Agregando estudiante...</div>';
+				$success = '<div class="alert alert-success"><b>Éxito! </b>Agregando profesor...</div>';
 			}else{
 				$error = '<div class="alert alert-danger"><b>Error! </b>Ocurrió algún error durante el registro</div>';
 			}
@@ -201,8 +233,8 @@ if(isset($_POST["action"]))
 	if($_POST["action"] == 'fetch_single')
 	{
 		$object->query = "
-		SELECT * FROM student_srms 
-		WHERE student_id = '".$_POST["student_id"]."'
+		SELECT * FROM teacher_srms 
+		WHERE id = '".$_POST["teacher_id"]."'
 		";
 
 		$result = $object->get_result();
@@ -211,15 +243,14 @@ if(isset($_POST["action"]))
 
 		foreach($result as $row)
 		{
-			$data['student_name'] 				= $row['student_name'];
-			$data['student_ap_pat'] 			= $row['student_father_lastname'];
-			$data['student_ap_mat'] 			= $row['student_mother_lastname'];
+			$data['teacher_name'] 				= $row['nombre'];
+			$data['teacher_ap_pat'] 			= $row['apellido_pat'];
+			$data['teacher_ap_mat'] 			= $row['apellido_mat'];
 			$data['rut'] 						= $row['rut'];
 			$data['dv'] 						= $row['dv'];
-			$data['student_email'] 				= $row['student_email_id'];
-			$data['student_dob']				= $row['student_dob'];
-			$data['student_teacher_email']		= $row['email_profesor'];
-			$data['student_institution']		= $row['institution'];
+			$data['teacher_email'] 				= $row['email'];
+			$data['teacher_dob']				= $row['fecha_nac'];
+			$data['teacher_institution']		= $row['institution'];
 			
 		}
 
@@ -233,52 +264,50 @@ if(isset($_POST["action"]))
 		$success = '';
 
 		$data = array(
-			':student_id'		=>	$_POST['hidden_id']
+			':teacher_id'		=>	$_POST['hidden_id']
 		);
 
 		$object->query = "
-		SELECT * FROM student_srms 
-		WHERE student_id = :student_id
+		SELECT * FROM teacher_srms 
+		WHERE id = :teacher_id
 		";
 
 		$object->execute($data);
 
 		if($object->row_count() > 1)
 		{
-			$error = '<div class="alert alert-danger"><b>Error!</b>Existe otro alumno con el mismo ID</div>';
+			$error = '<div class="alert alert-danger"><b>Error!</b>Existe otro profesor con el mismo ID</div>';
 		}
 		else
 		{
 
 			$data = array(
-				':student_name'			=>	$_POST["student_name"],
-				':student_ap_pat'		=>	$_POST["student_ap_pat"],
-				':student_ap_mat'		=>	$_POST["student_ap_mat"],
+				':teacher_name'			=>	$_POST["teacher_name"],
+				':teacher_ap_pat'		=>	$_POST["teacher_ap_pat"],
+				':teacher_ap_mat'		=>	$_POST["teacher_ap_mat"],
 				':rut'					=>	$_POST["rut"],
 				':dv'					=>	$_POST["dv"],
-				':student_email'		=>	$_POST["student_email"],
-				':student_dob'			=>	$_POST["student_dob"],
-				':student_teacher_email'=>	$_POST["student_teacher_email"],
-				':student_institution'	=>	$_POST["student_institution"]
+				':teacher_email'		=>	$_POST["teacher_email"],
+				':teacher_dob'			=>	$_POST["teacher_dob"],
+				':teacher_institution'	=>	$_POST["teacher_institution"]
 			);
 
 			$object->query = "
-			UPDATE student_srms 
-			SET student_name = :student_name, 
-			student_father_lastname = :student_ap_pat, 
-			student_mother_lastname = :student_ap_mat, 
+			UPDATE teacher_srms 
+			SET nombre = :teacher_name, 
+			apellido_pat = :teacher_ap_pat, 
+			apellido_mat = :teacher_ap_mat, 
 			rut = :rut, 
 			dv = :dv, 
-			student_email_id = :student_email, 
-			student_dob = :student_dob, 
-			email_profesor = :student_teacher_email, 
-			institution = :student_institution 
-			WHERE student_id = '".$_POST['hidden_id']."'
+			email = :teacher_email, 
+			fecha_nac = :teacher_dob, 
+			institution = :teacher_institution 
+			WHERE id = '".$_POST['hidden_id']."'
 			";
 
 			$object->execute($data);
 
-			$success = '<div class="alert alert-success"><b>Éxito! </b>Actualizando datos del estudiante...</div>';
+			$success = '<div class="alert alert-success"><b>Éxito! </b>Actualizando datos del profesor...</div>';
 			
 		}
 
@@ -294,30 +323,30 @@ if(isset($_POST["action"]))
 	if($_POST["action"] == 'change_status')
 	{
 		$data = array(
-			':student_status'		=>	$_POST['next_status']
+			':teacher_status'		=>	$_POST['next_status']
 		);
 
 		$object->query = "
-		UPDATE student_srms 
-		SET student_status = :student_status 
-		WHERE student_id = '".$_POST["id"]."'
+		UPDATE teacher_srms 
+		SET teacher_status = :teacher_status 
+		WHERE id = '".$_POST["id"]."'
 		";
 
 		$object->execute($data);
 
-		echo '<div class="alert alert-success">Actualizando estado del estudiante a: '.$_POST['next_status'].'</div>';
+		echo '<div class="alert alert-success">Actualizando estado del profesor a: '.$_POST['next_status'].'</div>';
 	}
 
 	if($_POST["action"] == 'delete')
 	{
 		$object->query = "
-		DELETE FROM student_srms 
-		WHERE student_id = '".$_POST["id"]."'
+		DELETE FROM teacher_srms 
+		WHERE id = '".$_POST["id"]."'
 		";
 
 		$object->execute();
 
-		echo '<div class="alert alert-success"><b>Éxito! </b>Eliminando estudiante...</div>';
+		echo '<div class="alert alert-success"><b>Éxito! </b>Eliminando profesor...</div>';
 	}
 
 }

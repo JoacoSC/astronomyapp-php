@@ -388,13 +388,13 @@
 
                         <?php
 
-                        }else if ($role == 'Estudiante'){
+                        }else if ($role == 'student'){
                             ?>
 
                             <li class="nav-item dropdown no-arrow">
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="mr-4 d-none d-lg-inline text-gray-600 small"><?php echo $user['nombre'] . " " . $user['apellido_pat'] ?> </span>
+                                <span class="mr-4 d-none d-lg-inline text-gray-600 small"><?php echo $user['student_name'] . " " . $user['student_father_lastname'] ?> </span>
                                 <img class="img-profile rounded-circle"
                                     src="img/undraw_profile.svg">
                             </a>

@@ -35,3 +35,8 @@
 .bg-start-class{
   background-color: #ff006a !important;
 }
+
+.action_buttons{
+  min-width:70px;
+}
+

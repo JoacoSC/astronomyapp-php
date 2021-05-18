@@ -1,7 +1,7 @@
 <?php
     include 'header.php';
 
-    $clases = obtenerClases($con);
+    $clases = obtenerClasesHabilitadasTeacher($con, $user['id']);
     $estudiantes = obtenerEstudiantes($con, $user['email']);
 
 ?>

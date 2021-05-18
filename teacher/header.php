@@ -13,14 +13,14 @@
         /* print "entré"; */
         require ('../connection.php');
         $user = get_user_info($con, $_SESSION['id']);
-        /* echo $user[0];
-        echo "entre"; */
+        /* echo $_SESSION['id']; */
+        /* echo "entre"; */
         /* echo isset($user[0]); */
         /* foreach ($user as $key => $value) {
             echo "Key: $key; Value: $value\n<br>";
         } */
     }else{
-        /* print "no entré"; */
+        header("location:".$object->base_url);
     }
 
 ?>
@@ -49,7 +49,9 @@
     <!-- Custom styles for this template-->
     <link href="../css/sb-admin-2.css" rel="stylesheet">
     <link href="../css/styles.css" rel="stylesheet">
-    <link href="../vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet">
+    <link href="../vendor/datatables/fixedcolumns-3.3.2/css/fixedcolumns.bootstrap4.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="../vendor/DataTables/datatables.min.css"/>
+    <!-- <link href="../vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet"> -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 
 </head>
@@ -119,8 +121,12 @@
             </div> -->
 
             <!-- Nav Item - Pages Collapse Menu -->
+
+            <!-- Divider -->
+            <hr class="sidebar-divider">
+
             <!-- Sidebar Toggler (Sidebar) -->
-            <div class="text-center d-none d-md-inline">
+            <div class="text-center d-none d-md-inline mt-3">
                 <button class="rounded-circle border-0" id="sidebarToggle"></button>
             </div>
             

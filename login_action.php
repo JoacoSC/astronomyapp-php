@@ -55,7 +55,7 @@ if (empty($error)){
         }
     }else{
 
-        $query = "SELECT id, nombre, apellido_pat, apellido_mat, rut, email, contraseña, institucion, telefono, fecha_nac, region, comuna, role FROM estudiante WHERE email=?";
+        $query = "SELECT * FROM student_srms WHERE student_email_id=?";
         $q = mysqli_stmt_init($con);
         mysqli_stmt_prepare($q, $query);
 
@@ -70,11 +70,11 @@ if (empty($error)){
 
         if (!empty($row)){
             // verify password
-            if(password_verify($contraseña, $row['contraseña'])){
+            if(password_verify($contraseña, $row['hashed_pass'])){
                 
                 // create session variable
                 /* $_SESSION['id'] = mysqli_insert_id($con); */
-                $_SESSION['id'] = $row['id'];
+                $_SESSION['id'] = $row['student_id'];
                 print "Ingresaste correctamente";
                 /* print_r ($row); */
                 header("location: student/index.php");

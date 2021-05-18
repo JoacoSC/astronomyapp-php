@@ -10,15 +10,16 @@ $user = array();
 
     
     if(isset($_SESSION['id'])){
-        /* print "entré"; */
+        echo "entré";
         
         $user = get_user_info($con, $_SESSION['id']);
-        /* echo $user[0];
-        echo isset($user[0]); */
+        echo $user[0];
+        
         /* foreach ($user as $key => $value) {
             echo "Key: $key; Value: $value\n<br>";
         } */
     }
+    echo "NO entré";
 
 
 /* require 'connection.php'; */
@@ -71,8 +72,9 @@ if($_FILES["import_excel"]["name"] != '')
     $apellido_pat  = $row[2],
     $apellido_mat  = $row[3],
     $rut  = $row[4],
-    $email  = $row[5],
-    $institucion  = $row[6]
+    $dv  = $row[5],
+    $email  = $row[6],
+    $institucion  = $row[7]
     
    );
 
@@ -87,20 +89,26 @@ if($_FILES["import_excel"]["name"] != '')
 
    $email_profesor = $user['email'];
 
-   $query = "INSERT INTO estudiante (nombre, apellido_pat, apellido_mat, rut, email, contraseña, institucion, email_profesor)"; 
-   $query .= "VALUES( ?, ?, ?, ?, ?, ?, ?, ?)";
+   $query = "INSERT INTO student_srms (student_name, student_father_lastname, student_mother_lastname, rut, dv, student_email_id, hashed_pass, institution, email_profesor)"; 
+   $query .= "VALUES( ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
    $q = mysqli_stmt_init($con);
 
    mysqli_stmt_prepare($q, $query);
 
-   mysqli_stmt_bind_param($q, 'ssssssss', $nombre, $apellido_pat, $apellido_mat, $rut, $email, $hashed_pass, $institucion, $email_profesor);
+   mysqli_stmt_bind_param($q, 'sssssssss', $nombre, $apellido_pat, $apellido_mat, $rut, $dv, $email, $hashed_pass, $institucion, $email_profesor);
    
    mysqli_stmt_execute($q);
+
+   if(mysqli_stmt_affected_rows($q) > 0){
+
+        $message = '<div class="alert alert-success"><b>Éxito!</b>Registro ingresado correctamente</div>';
+
+    }else{
+        $message = '<div class="alert alert-danger"><b>Error!</b>Ocurrió un problema durante el registro</div>';
+    }
    
   }
-  $message = '<div class="alert alert-success">Registro ingresado correctamente</div>';
-
  }
  else
  {

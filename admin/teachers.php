@@ -20,23 +20,21 @@
 
     $user = array();
 
-    $estudiantes = obtenerEstudiantesAdmin($con);
     $profesores = obtenerProfesoresAdmin($con);
     $instituciones = obtenerInstitucionesAdmin($con);
 
-    $array_instStud = array();
-    foreach ($estudiantes as $estudiante) : 
-        $array_instStud[] = obtenerInstitucionTablaAdmin($con, $estudiante[12]);
+    $array_instProf = array();
+    foreach ($profesores as $profesor) : 
+        $array_instProf[] = obtenerInstitucionTablaAdmin($con, $profesor[8]);
     endforeach;
-    /* print_r ($estudiantes); */
-    
+
     if(isset($_SESSION['id'])){
         /* print "entré"; */
         /* require ('connection.php'); */
         $user = get_user_info($con, $_SESSION['id']);
         
-        /* $estudiantes = obtenerEstudiantesAdmin($con);
-        print_r ($estudiantes); */
+        /* $profesores = obtenerprofesoresAdmin($con);
+        print_r ($profesores); */
         /* echo "entre"; */
         /* echo isset($user[0]); */
         /* foreach ($user as $key => $value) {
@@ -62,10 +60,10 @@
                     <!-- Page Heading -->
 					<div class="row">
 						<div class="col" align="left">
-							<h1 class="h3 mt-2 mb-4 text-gray-800">Lista de estudiantes</h1>
+							<h1 class="h3 mt-2 mb-4 text-gray-800">Lista de profesores</h1>
                         </div>
 						<div class="col" align="right">
-                        <button type="button" name="add_student" id="add_student" class="btn btn-info btn-sm mt-3 mr-2" data-toggle="modal" data-target="#studentModal">Agregar un estudiante&nbsp;&nbsp;<i class="fas fa-plus"></i></button>
+                        <button type="button" name="add_teacher" id="add_teacher" class="btn btn-info btn-sm mt-3 mr-2" data-toggle="modal" data-target="#teacherModal">Agregar un profesor&nbsp;&nbsp;<i class="fas fa-plus"></i></button>
                         </div>
 					</div>
 
@@ -84,7 +82,6 @@
                                             <th>DV</th>
                                             <th>E-mail</th>
                                             <th style="min-width:150px">Institución</th>
-                                            <th>E-mail de su profesor</th>
                                             <th>Estado</th>
                                             <th>Acciones</th>
                                         </tr>
@@ -101,31 +98,30 @@
                                     <tbody>
                                     <?php
                         
-                                    if(!empty($estudiantes)){
-
+                                    if(!empty($profesores)){
+                                        
                                         $i = 0;
 
-                                        foreach ($estudiantes as $estudiante) : 
+                                        foreach ($profesores as $profesor) : 
                                     ?>
                                         <tr>
-                                        <td><?php echo $estudiante[1] ?></td>
-                                        <td><?php echo $estudiante[2] ?></td>
-                                        <td><?php echo $estudiante[3] ?></td>
-                                        <td><?php echo $estudiante[4] ?></td>
-                                        <td><?php echo $estudiante[5] ?></td>
-                                        <td><?php echo $estudiante[6] ?></td>
-                                        <td><?php echo ($array_instStud[$i][0][1]. " - ". $array_instStud[$i][0][2]) ?></td>
-                                        <td><?php echo $estudiante[10] ?></td>
+                                        <td><?php echo $profesor[1] ?></td>
+                                        <td><?php echo $profesor[2] ?></td>
+                                        <td><?php echo $profesor[3] ?></td>
+                                        <td><?php echo $profesor[4] ?></td>
+                                        <td><?php echo $profesor[5] ?></td>
+                                        <td><?php echo $profesor[6] ?></td>
+                                        <td><?php echo ($array_instProf[$i][0][1]. " - ". $array_instProf[$i][0][2]) ?></td>
                                         <td>
                                         <?php
 
-                                        if($estudiante[9] == 'Habilitado')
+                                        if($profesor[13] == 'Habilitado')
                                         {
-                                            echo ('<button type="button" name="status_button" class="btn btn-primary btn-sm status_button" data-id="'.$estudiante[0].'" data-status="'.$estudiante[9].'">Habilitado</button>');
+                                            echo ('<button type="button" name="status_button" class="btn btn-primary btn-sm status_button" data-id="'.$profesor[0].'" data-status="'.$profesor[13].'">Habilitado</button>');
                                         }
                                         else
                                         {
-                                            echo ('<button type="button" name="status_button" class="btn btn-danger btn-sm status_button" data-id="'.$estudiante[0].'" data-status="'.$estudiante[9].'">Deshabilitado</button>');
+                                            echo ('<button type="button" name="status_button" class="btn btn-danger btn-sm status_button" data-id="'.$profesor[0].'" data-status="'.$profesor[13].'">Deshabilitado</button>');
                                         }
                                         ?>
                                         </td>
@@ -133,16 +129,16 @@
                                         <td>
                                         <?php
                                         echo ('<div align="center">
-                                            <button type="button" name="edit_button" class="btn btn-warning btn-circle btn-sm edit_button" data-id="'.$estudiante[0].'"><i class="fas fa-edit"></i></button>
+                                            <button type="button" name="edit_button" class="btn btn-warning btn-circle btn-sm edit_button" data-id="'.$profesor[0].'"><i class="fas fa-edit"></i></button>
                                             &nbsp;
-                                            <button type="button" name="delete_button" class="btn btn-danger btn-circle btn-sm delete_button" data-id="'.$estudiante[0].'"><i class="fas fa-times"></i></button>
+                                            <button type="button" name="delete_button" class="btn btn-danger btn-circle btn-sm delete_button" data-id="'.$profesor[0].'"><i class="fas fa-times"></i></button>
                                             </div>
                                             ');
                                         ?>
                                         </td>
 
                                         </tr>
-                                    <?php
+                                    <?php  
                                         $i++;
                                         endforeach;
                                         }
@@ -166,27 +162,27 @@ include 'footer.php';
 
 ?>
 
-<div id="studentModal" class="modal fade">
+<div id="teacherModal" class="modal fade">
   	<div class="modal-dialog">
-    	<form method="post" id="student_form">
+    	<form method="post" id="teacher_form">
       		<div class="modal-content">
         		<div class="modal-header">
-          			<h4 class="modal-title" id="modal_title">Agregar estudiante</h4>
+          			<h4 class="modal-title" id="modal_title">Agregar profesor</h4>
           			<button type="button" class="close" data-dismiss="modal">&times;</button>
         		</div>
         		<div class="modal-body">
         			<span id="form_message"></span>
                     <div class="form-group">
-		          		<label>Nombre del estudiante</label>
-		          		<input type="text" name="student_name" id="student_name" class="form-control" required data-parsley-pattern="/^[a-zA-Z0-9 \s]+$/" data-parsley-trigger="keyup" />
+		          		<label>Nombre del profesor</label>
+		          		<input type="text" name="teacher_name" id="teacher_name" class="form-control" required data-parsley-pattern="/^[a-zA-Z0-9 \s]+$/" data-parsley-trigger="keyup" />
 		          	</div>
                     <div class="form-group">
 		          		<label>Apellido paterno</label>
-		          		<input type="text" name="student_ap_pat" id="student_ap_pat" class="form-control" required data-parsley-pattern="/^[a-zA-Z0-9 \s]+$/" data-parsley-trigger="keyup" />
+		          		<input type="text" name="teacher_ap_pat" id="teacher_ap_pat" class="form-control" required data-parsley-pattern="/^[a-zA-Z0-9 \s]+$/" data-parsley-trigger="keyup" />
 		          	</div>
                     <div class="form-group">
 		          		<label>Apellido materno</label>
-		          		<input type="text" name="student_ap_mat" id="student_ap_mat" class="form-control" required data-parsley-pattern="/^[a-zA-Z0-9 \s]+$/" data-parsley-trigger="keyup" />
+		          		<input type="text" name="teacher_ap_mat" id="teacher_ap_mat" class="form-control" required data-parsley-pattern="/^[a-zA-Z0-9 \s]+$/" data-parsley-trigger="keyup" />
 		          	</div>
                      <div class="form-group row" style="padding:12px;">
 		          		<label>Rut</label>
@@ -196,35 +192,15 @@ include 'footer.php';
 		          	</div>
                     <div class="form-group">
                         <label>Email</label>
-                        <input type="text" name="student_email" id="student_email" class="form-control" required data-parsley-type="email" data-parsley-trigger="keyup" />
+                        <input type="text" name="teacher_email" id="teacher_email" class="form-control" required data-parsley-type="email" data-parsley-trigger="keyup" />
                     </div>
                     <div class="form-group">
                         <label>Fecha de Nacimiento</label>
-                        <input type="date" name="student_dob" id="student_dob" class="form-control datepicker" required data-parsley-trigger="keyup" />
-                    </div>
-                    <div class="form-group">
-                        <label>Email de profesor encargado</label>
-
-                        <select type="text" name="student_teacher_email" id="student_teacher_email" class="form-control" data-parsley-trigger="keyup">
-
-							<?php
-								foreach ($profesores as $profesor) {
-								?>
-									<option value="<?php echo $profesor[6] ?>"><?php echo $profesor[1].' '.$profesor[2].' '.$profesor[3].' - ('.$profesor[6].')' ?></option>
-								<?php
-							}
-							?>
-                            <!-- <option value="otro">Otro...</option> -->
-						</select>
-                        <!-- <div class="form-group mt-2">
-                        <label>Ingrese otro email de profesor encargado a continuación: </label>
-                        <input type="text" name="other_student_teacher_email" class="form-control hidden-textbox" data-parsley-trigger="keyup" />
-                        </div> -->
-                        
+                        <input type="date" name="teacher_dob" id="teacher_dob" class="form-control datepicker" required data-parsley-trigger="keyup" />
                     </div>
                     <div class="form-group">
                         <label>Institución</label>
-                        <select type="text" name="student_institution" id="student_institution" class="form-control" data-parsley-trigger="keyup">
+                        <select type="text" name="teacher_institution" id="teacher_institution" class="form-control" data-parsley-trigger="keyup">
                             <?php
                                 foreach ($instituciones as $institucion) {
                                 ?>
@@ -232,14 +208,14 @@ include 'footer.php';
                                 <?php
                                 }
                             ?>
-                            <!-- <option value="otro">Otro...</option> -->
+                            <option value="otro">Otro...</option>
                         </select>
-                        <!-- <div class="form-group mt-2">
+                        <div class="form-group mt-2">
                             <label>Ingrese otra institución a continuación: </label>
                             <input type="text" name="other_teacher_institution" class="form-control hidden-textbox" data-parsley-trigger="keyup" />
                             <label>Campus: (Ejemplo: San Felipe)</label>
                             <input type="text" name="other_teacher_institution_campus" class="form-control hidden-textbox" data-parsley-trigger="keyup" />
-                        </div> -->
+                        </div>
                     </div>
         		</div>
         		<div class="modal-footer">
@@ -255,7 +231,7 @@ include 'footer.php';
 <script>
 $(document).ready(function(){
 
-    $('#student_teacher_email').on('change', function() {
+    $('#teacher_institution').on('change', function() {
     var changed = this,
     check = changed.value.toLowerCase() === "otro";
     
@@ -273,13 +249,13 @@ $(document).ready(function(){
         }
     } );
 
-    $('#student_form').on('submit', function(event){
+    $('#teacher_form').on('submit', function(event){
 		event.preventDefault();
-		if($('#student_form').parsley().isValid())
+		if($('#teacher_form').parsley().isValid())
 		{		
             
 			$.ajax({
-				url:"student_action.php",
+				url:"teacher_action.php",
 				method:"POST",
 				data:$(this).serialize(),
 				dataType:'json',
@@ -298,7 +274,7 @@ $(document).ready(function(){
 					}
 					else
 					{
-                        $('#studentModal').modal('hide');
+                        $('#teacherModal').modal('hide');
 						$('#message').html(data.success);
 						
 						setTimeout(function(){
@@ -326,7 +302,7 @@ $(document).ready(function(){
 
       		$.ajax({
 
-        		url:"student_action.php",
+        		url:"teacher_action.php",
 
         		method:"POST",
 
@@ -356,44 +332,43 @@ $(document).ready(function(){
 
     $(document).on('click', '.edit_button', function(){
 
-    var student_id = $(this).data('id');
+    var teacher_id = $(this).data('id');
 
-    $('#student_form').parsley().reset();
+    $('#teacher_form').parsley().reset();
 
     $('#form_message').html('');
 
     $.ajax({
 
-      url:"student_action.php",
+      url:"teacher_action.php",
 
       method:"POST",
 
-      data:{student_id:student_id, action:'fetch_single'},
+      data:{teacher_id:teacher_id, action:'fetch_single'},
 
       dataType:'JSON',
 
       success:function(data)
       {
 
-        $('#student_name').val(data.student_name);
-        $('#student_ap_pat').val(data.student_ap_pat);
-        $('#student_ap_mat').val(data.student_ap_mat);
+        $('#teacher_name').val(data.teacher_name);
+        $('#teacher_ap_pat').val(data.teacher_ap_pat);
+        $('#teacher_ap_mat').val(data.teacher_ap_mat);
         $('#rut').val(data.rut);
         $('#dv').val(data.dv);
-        $('#student_email').val(data.student_email);
-        $('#student_dob').val(data.student_dob);
-        $('#student_teacher_email').val(data.student_teacher_email);
-        $('#student_institution').val(data.student_institution);
+        $('#teacher_email').val(data.teacher_email);
+        $('#teacher_dob').val(data.teacher_dob);
+        $('#teacher_institution').val(data.teacher_institution);
 
-        $('#modal_title').text('Editar información de estudiante');
+        $('#modal_title').text('Editar información de profesor');
 
         $('#action').val('Edit');
 
         $('#submit_button').val('Editar');
 
-        $('#studentModal').modal('show');
+        $('#teacherModal').modal('show');
 
-        $('#hidden_id').val(student_id);
+        $('#hidden_id').val(teacher_id);
       }
 
     })
@@ -409,7 +384,7 @@ $(document).ready(function(){
 
         $.ajax({
 
-            url:"student_action.php",
+            url:"teacher_action.php",
 
             method:"POST",
 

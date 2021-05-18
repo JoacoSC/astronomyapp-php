@@ -8,7 +8,7 @@
             <footer class="sticky-footer bg-white">
                 <div class="container my-auto">
                     <div class="copyright text-center my-auto">
-                        <span>Copyright &copy; Astronomyapp <?php echo date('Y'); ?></span>
+                        <span>Copyright &copy; Joaquín Salinas 2020 - <?php echo date('Y'); ?></span>
                     </div>
                 </div>
             </footer>
@@ -59,7 +59,7 @@
     <script src="../vendor/datatables/jquery.dataTables.js"></script>
     <!-- <script src="../vendor/datatables/dataTables.bootstrap4.min.js"></script> -->
     <script src="../vendor/datatables/fixedcolumns-3.3.2/js/fixedcolumns.bootstrap.min.js"></script>
-    <script type="text/javascript" src="../vendor/DataTables/datatables.min.js"></script>
+    <script type="text/javascript" src="../vendor/DataTables/datatables.js"></script>
     <!-- <script src="../js/demo/datatables-demo.js"></script> -->
 
     <script type="text/javascript" src="../vendor/parsley/dist/parsley.min.js"></script>

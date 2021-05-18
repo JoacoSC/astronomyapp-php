@@ -29,9 +29,13 @@
                                         placeholder="Email" required>
                                 </div>
                                 <div class="form-group row">
-                                    <div class="col-sm-6 mb-3">
+                                    <div class="col-sm-4 mb-3">
                                         <input type="text" class="form-control form-control-user" name="rut" id="rut"
-                                            placeholder="Rut" oninput="checkRut(this)" maxlength="10" required>
+                                            placeholder="Rut" maxlength="8" required>
+                                    </div>
+                                    <div class="col-sm-2 mb-3 pl-0">
+                                        <input type="text" class="form-control form-control-user" name="dv" id="dv"
+                                            placeholder="DV" maxlength="1" required>
                                     </div>
                                     <div class="col-sm-6">
                                         <input type="text" class="form-control form-control-user" name="telefono" id="exampleLastName"
@@ -57,6 +61,13 @@
                                 </div>
                                 <div class="form-group">
                                     <select class="form-control" name="comuna" id="comunas"></select>
+                                </div>
+                                <div class="text-center">
+                                    <p class="text-gray-900 mb-2">Institución</p>
+                                </div>
+                                <div class="form-group">
+                                    <input type="text" class="form-control form-control-user" name="institution" id="institution"
+                                        placeholder="Institución" required>
                                 </div>
 
                                 <button class="btn btn-primary btn-user btn-block" type="submit">

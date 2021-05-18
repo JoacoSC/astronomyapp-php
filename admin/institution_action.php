@@ -7,6 +7,7 @@ include('srms.php');
 $object = new srms();
 
 include('../connection.php');
+include('../helper.php');
 
 if(isset($_POST["action"]))
 {
@@ -116,16 +117,17 @@ if(isset($_POST["action"]))
 
 		$success = '';
 		
-		$student_email_id =	$_POST["student_email"];
+		$institution_name =	$_POST["institution_name"];
+        $institution_campus 	=	$_POST["institution_campus"];
 		
-		$query = "SELECT * FROM student_srms WHERE student_email_id = ?";
+		$query = "SELECT * FROM institution_srms WHERE institution_name = ? AND institution_campus = ?";
 
 		$q = mysqli_stmt_init($con);
 
 		mysqli_stmt_prepare($q, $query);
 
 		// bind the statement
-		mysqli_stmt_bind_param($q, 's', $student_email_id);
+		mysqli_stmt_bind_param($q, 'ss', $institution_name, $institution_campus);
 
 		// execute sql statement
 		mysqli_stmt_execute($q);
@@ -136,38 +138,16 @@ if(isset($_POST["action"]))
 		
 		if($row_count > 0)
 		{
-			$error = '<div class="alert alert-danger"><b>Error! </b>El email del estudiante ya está registrado</div>';
+			$error = '<div class="alert alert-danger"><b>Error! </b>La institución ya está registrada</div>';
 		}
 		else
 		{
-			$name 		=	$_POST["student_name"];
-			$ap_pat 	=	$_POST["student_ap_pat"];
-			$ap_mat 	=	$_POST["student_ap_mat"];
-			$rut 		=	$_POST["rut"];
-			$dv 		=	$_POST["dv"];
-			$email 		=	$_POST["student_email"];
-			$dob 		=	$_POST["student_dob"];
-			/* if($_POST["student_teacher_email"] != 'otro'){ */
-				$tea_email 		=	$_POST["student_teacher_email"];
-			/* }else{
-				$tea_email 		=	$_POST["other_student_teacher_email"];
-			} */
-			/* $tea_email 	=	$_POST["student_teacher_email"]; */
-			$inst 		=	$_POST["student_institution"];
+			$institution_name 		=	$_POST["institution_name"];
+			$institution_campus 	=	$_POST["institution_campus"];
 
-			//CALCULO DE CONTRASEÑA
-			
-			$primerResultado = substr($rut, 0, 4);
-			$segundoResultado = substr($name, 0, 4);
-			$contraseña = $primerResultado.$segundoResultado;
-
-			$hashed_pass = password_hash($contraseña, PASSWORD_DEFAULT);
-			
-			//CALCULO DE CONTRASEÑA
-
-			$query = "INSERT INTO student_srms (student_name, student_father_lastname, student_mother_lastname, rut, dv, student_email_id, student_dob, email_profesor, hashed_pass, institution)";
+			$query = "INSERT INTO institution_srms (institution_name, institution_campus)";
 			/* VALUES ('$nombre', '$apellidoPat','$apellidoMat','$rut','$email','". md5($contraseña)."','$telefono','$fecha_nac','$region','$comuna')"); */
-			$query .= " VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+			$query .= " VALUES(?, ?)";
 
 			// initialize a statement
 			$q = mysqli_stmt_init($con);
@@ -176,14 +156,14 @@ if(isset($_POST["action"]))
 			mysqli_stmt_prepare($q, $query);
 
 			// bind values
-			mysqli_stmt_bind_param($q, 'sssiisssss', $name, $ap_pat, $ap_mat, $rut, $dv, $email, $dob, $tea_email, $hashed_pass, $inst);
+			mysqli_stmt_bind_param($q, 'ss', $institution_name, $institution_campus);
 
 			// execute statement
 			mysqli_stmt_execute($q);
 
 			if(mysqli_stmt_affected_rows($q) == 1){
 
-				$success = '<div class="alert alert-success"><b>Éxito! </b>Agregando estudiante...</div>';
+				$success = '<div class="alert alert-success"><b>Éxito! </b>Agregando institución...</div>';
 			}else{
 				$error = '<div class="alert alert-danger"><b>Error! </b>Ocurrió algún error durante el registro</div>';
 			}
@@ -201,8 +181,8 @@ if(isset($_POST["action"]))
 	if($_POST["action"] == 'fetch_single')
 	{
 		$object->query = "
-		SELECT * FROM student_srms 
-		WHERE student_id = '".$_POST["student_id"]."'
+		SELECT * FROM institution_srms 
+		WHERE institution_id = '".$_POST["institution_id"]."'
 		";
 
 		$result = $object->get_result();
@@ -211,15 +191,8 @@ if(isset($_POST["action"]))
 
 		foreach($result as $row)
 		{
-			$data['student_name'] 				= $row['student_name'];
-			$data['student_ap_pat'] 			= $row['student_father_lastname'];
-			$data['student_ap_mat'] 			= $row['student_mother_lastname'];
-			$data['rut'] 						= $row['rut'];
-			$data['dv'] 						= $row['dv'];
-			$data['student_email'] 				= $row['student_email_id'];
-			$data['student_dob']				= $row['student_dob'];
-			$data['student_teacher_email']		= $row['email_profesor'];
-			$data['student_institution']		= $row['institution'];
+			$data['institution_name'] 				= $row['institution_name'];
+			$data['institution_campus'] 			= $row['institution_campus'];
 			
 		}
 
@@ -233,52 +206,40 @@ if(isset($_POST["action"]))
 		$success = '';
 
 		$data = array(
-			':student_id'		=>	$_POST['hidden_id']
+            ':institution_name'			=>	$_POST["institution_name"],
+            ':institution_campus'		=>	$_POST["institution_campus"]
 		);
 
 		$object->query = "
-		SELECT * FROM student_srms 
-		WHERE student_id = :student_id
+		SELECT * FROM institution_srms 
+		WHERE institution_name = :institution_name
+        AND institution_campus = :institution_campus
 		";
 
 		$object->execute($data);
 
-		if($object->row_count() > 1)
+		if($object->row_count() > 0)
 		{
-			$error = '<div class="alert alert-danger"><b>Error!</b>Existe otro alumno con el mismo ID</div>';
+			$error = '<div class="alert alert-danger"><b>Error! </b>Existe otro instituto con el mismo nombre y campus</div>';
 		}
 		else
 		{
 
 			$data = array(
-				':student_name'			=>	$_POST["student_name"],
-				':student_ap_pat'		=>	$_POST["student_ap_pat"],
-				':student_ap_mat'		=>	$_POST["student_ap_mat"],
-				':rut'					=>	$_POST["rut"],
-				':dv'					=>	$_POST["dv"],
-				':student_email'		=>	$_POST["student_email"],
-				':student_dob'			=>	$_POST["student_dob"],
-				':student_teacher_email'=>	$_POST["student_teacher_email"],
-				':student_institution'	=>	$_POST["student_institution"]
+				':institution_name'			=>	$_POST["institution_name"],
+				':institution_campus'		=>	$_POST["institution_campus"]
 			);
 
 			$object->query = "
-			UPDATE student_srms 
-			SET student_name = :student_name, 
-			student_father_lastname = :student_ap_pat, 
-			student_mother_lastname = :student_ap_mat, 
-			rut = :rut, 
-			dv = :dv, 
-			student_email_id = :student_email, 
-			student_dob = :student_dob, 
-			email_profesor = :student_teacher_email, 
-			institution = :student_institution 
-			WHERE student_id = '".$_POST['hidden_id']."'
+			UPDATE institution_srms 
+			SET institution_name = :institution_name, 
+			institution_campus = :institution_campus
+			WHERE institution_id = '".$_POST['hidden_id']."'
 			";
 
 			$object->execute($data);
 
-			$success = '<div class="alert alert-success"><b>Éxito! </b>Actualizando datos del estudiante...</div>';
+			$success = '<div class="alert alert-success"><b>Éxito! </b>Actualizando datos de la institución...</div>';
 			
 		}
 
@@ -310,14 +271,39 @@ if(isset($_POST["action"]))
 
 	if($_POST["action"] == 'delete')
 	{
-		$object->query = "
-		DELETE FROM student_srms 
-		WHERE student_id = '".$_POST["id"]."'
-		";
+        $error = '';
 
-		$object->execute();
+		$success = '';
+		
+		$institution_id =	$_POST["id"];
+		
+		$cantidad = cantidadDeInscritosAInstitucion($con, $institution_id);
+		
+		if($cantidad > 0)
+		{
+			$error = '<div class="alert alert-danger alert-dismissible fade show"><b>Error! </b>La institución no se puede eliminar porque hay profesores y/o alumnos registrados que pertenecen a esa institución.
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button></div>';
+		}
+		else
+		{
+            $object->query = "
+            DELETE FROM institution_srms 
+            WHERE institution_id = '".$_POST["id"]."'
+            ";
 
-		echo '<div class="alert alert-success"><b>Éxito! </b>Eliminando estudiante...</div>';
+            $object->execute();
+
+            $success = '<div class="alert alert-success"><b>Éxito! </b>Eliminando institución...</div>';
+        }
+
+        $output = array(
+			'error'		=>	$error,
+			'success'	=>	$success
+		);
+
+		echo json_encode($output);
 	}
 
 }

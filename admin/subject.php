@@ -32,23 +32,20 @@ foreach($result as $row)
 }
 
 ?>
-
+                    <div class="container-fluid card-style mb-5 pb-4">
                     <!-- Page Heading -->
-                    <h1 class="h3 mb-4 text-gray-800">Gestión de temas de la clase: <?php echo $class_name; ?></h1>
+					<div class="row">
+						<div class="col" align="left">
+							<h1 class="h3 mt-2 mb-4 text-gray-800">Gestión de temas de la clase: <?php echo $class_name; ?></h1>
+                        </div>
+						<!-- <div class="col" align="right">
+                        <button type="button" name="add_student" id="add_student" class="btn btn-info btn-sm mt-3 mr-2" data-toggle="modal" data-target="#studentModal">Agregar un estudiante&nbsp;&nbsp;<i class="fas fa-plus"></i></button>
+                        </div> -->
+					</div>
 
                     <!-- DataTales Example -->
                     <span id="message"></span>
-                    <div class="card shadow mb-4">
-                        <div class="card-header py-3">
-                        	<div class="row">
-                            	<div class="col">
-                            		<h6 class="m-0 font-weight-bold text-primary">Lista de temas</h6>
-                            	</div>
-                            	<div class="col" align="right">
-
-                            	</div>
-                            </div>
-                        </div>
+                    <div class="card">
                         <div class="card-body">
                             <div class="table-responsive">
                                 <table class="table table-bordered" id="subject_table" width="100%" cellspacing="0">

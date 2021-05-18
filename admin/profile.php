@@ -20,26 +20,26 @@ $result = $object->get_result();
 include('header.php');
 
 ?>
-
+                    <div class="container-fluid col-md-8 card-style mb-5 pb-4">
                     <!-- Page Heading -->
-                    <h1 class="h3 mb-4 text-gray-800">Perfil</h1>
+                    <form method="post" id="profile_form" enctype="multipart/form-data">
+                    <div class="row">
+						<div class="col" align="left">
+							<h1 class="h3 mt-2 mb-4 text-gray-800">Perfil</h1>
+                        </div>
+						<div clas="col" align="right">
+                            <input type="hidden" name="action" value="profile" />
+                            <button type="submit" name="edit_button" id="edit_button" class="btn btn-info btn-sm mt-3 "><i class="fas fa-edit"></i> Confirmar cambios</button>
+                            &nbsp;&nbsp;
+                        </div>
+					</div>
 
                     <!-- DataTales Example -->
                     
-                    <form method="post" id="profile_form" enctype="multipart/form-data">
-                        <div class="row"><div class="col-md-6"><span id="message"></span><div class="card shadow mb-4">
-                            <div class="card-header py-3">
-                                <div class="row">
-                                    <div class="col">
-                                        <h6 class="m-0 font-weight-bold text-primary">Perfil</h6>
-                                    </div>
-                                    <div clas="col" align="right">
-                                        <input type="hidden" name="action" value="profile" />
-                                        <button type="submit" name="edit_button" id="edit_button" class="btn btn-primary btn-sm"><i class="fas fa-edit"></i> Confirmar cambios</button>
-                                        &nbsp;&nbsp;
-                                    </div>
-                                </div>
-                            </div>
+                    
+                            
+                        <span id="message"></span>
+                        <div class="card mb-4">
                             <div class="card-body">
                                 <!--<div class="row">
                                     <div class="col-md-6">!-->
@@ -69,7 +69,7 @@ include('header.php');
                                     <!--</div>
                                 </div>!-->
                             </div>
-                        </div></div></div>
+                        </div>
                     </form>
                 <?php
                 include('footer.php');

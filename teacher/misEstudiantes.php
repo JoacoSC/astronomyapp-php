@@ -67,11 +67,11 @@
                                         foreach ($estudiantes as $estudiante) : 
                                     ?>
                                         <tr>
+                                        <td><?php echo $estudiante[1] ?></td>
                                         <td><?php echo $estudiante[2] ?></td>
                                         <td><?php echo $estudiante[3] ?></td>
-                                        <td><?php echo $estudiante[4] ?></td>
-                                        <td><?php echo $estudiante[5] ?></td>
-                                        <td><?php echo $estudiante[8] ?></td>
+                                        <td><?php echo ($estudiante[4]."-".$estudiante[5])?></td>
+                                        <td><?php echo $estudiante[6] ?></td>
                                         </tr>
                                     <?php
                                         endforeach;
@@ -94,4 +94,14 @@
 
 include 'footer.php';
 
-?>       
+?>
+
+<script>
+$(document).ready(function(){
+
+    $('#dataTable').DataTable({
+        
+        
+    });
+});
+</script>
