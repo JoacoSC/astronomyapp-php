@@ -35,7 +35,7 @@
 							<h1 class="h3 mt-2 mb-4 text-gray-800">Registro de estudiantes</h1>
                         </div>
 						<div class="col" align="right">
-							<button type="button" class="btn btn-info btn-sm mt-3 mr-2" href="../excel/estudiantes.xlsx" download="estudiantes.xlsx">Descargar plantilla Excel&nbsp;&nbsp;<i class="fas fa-download"></i></button>
+							<a type="button" class="btn btn-info btn-sm mt-3 mr-2" href="../excel/estudiantes.xlsx" download="estudiantes.xlsx">Descargar plantilla Excel&nbsp;&nbsp;<i class="fas fa-download"></i></a>
                         </div>
 					</div>
 

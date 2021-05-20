@@ -40,3 +40,15 @@
   min-width:70px;
 }
 
+.index-card{
+  max-width:80%;
+}
+
+.center{
+  text-align: center;
+}
+
+.header_logo{
+  max-width: 15%;
+  min-width: 180px;
+}

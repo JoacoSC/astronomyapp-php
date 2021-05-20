@@ -12,153 +12,119 @@
         <button>Enviar</button>
     </div> -->
     
-                <!-- Begin Page Content -->
-                <div class="container-fluid">
+    <!-- Begin Page Content -->
+    <div class="container-fluid card-style mb-5 pb-4">
 
-                    <!-- Page Heading -->
-                    <div class="d-sm-flex align-items-center justify-content-between mb-2">
-                        
-                    </div>
+        <!-- Page Heading -->
+        <div class="row">
+            <div class="col" align="left">
+                <h1 class="h3 mt-2 mb-4 text-gray-800">Comenzar una clase</h1>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-body">
+                <h6 class="h5 mb-4 text-gray-800">Para empezar, seleccione una clase:</h6>
+                <form action="iniciarClase.php" method="GET">
+                    <div class="form-group">
+                        <select class="form-control" name="clase" id="clase" value="<?php if(isset($_GET['clase'])) {echo $_GET['clase'];} ?>">
+                            <option value="0">Seleccione clase</option>
+                            <?php
+                            if(!empty($clases)){
 
-                    <div class="card-body">
-                    <h6 class="h5 mb-4 text-gray-800">Para empezar, seleccione una clase:</h6>
-
-                        <form action="iniciarClase.php" method="GET">
-
-                            
-                            <div class="form-group">
-                                <select class="form-control" name="clase" id="clase" value="<?php if(isset($_GET['clase'])) {echo $_GET['clase'];} ?>">
-
-                                    <option value="0">Seleccione clase</option>
-                                    <?php
-                                    if(!empty($clases)){
-
-                                        foreach ($clases as $clase) : 
-                                        ?>
-                                            <option value="<?php echo $clase[0] ?>"><?php echo $clase[1] ?></option>
-
-                                        <?php
-                                        endforeach;
-                                        }
-                                        ?>
-                                
-                                </select>
-                            </div>
-
-                            <button class="btn btn-info btn-user mt-3" type="submit">Continuar</button>
-                        
-                        </form>
-
-                    </div>
-
-                    <div class="table-responsive px-3 ">
-                    
+                                foreach ($clases as $clase) : 
+                                ?>
+                                    <option value="<?php echo $clase[0] ?>"><?php echo $clase[1] ?></option>
 
                                 <?php
-
-                                if($_SERVER['REQUEST_METHOD']=='GET')
-                                        {
-                                            
-                                            if (isset($_GET['clase'])){
-                                                echo "<hr>";
-
-                                                $id = $_GET['clase'];
-                                                $resultados = obtenerClaseEspecifica($con, $id);
-
-                                            }
-
-                                            if(!empty($resultados)){
-
-                                                foreach ($resultados as $resultado) : 
-                                        ?>
-
-                                <form class="user" method="POST" id="form_clase" action="iniciarClase_action.php">
-                                        <div class="form-group">
-                                            
-                                            
-                                            <h6 class="h3 mt-5 mb-5 text-gray-800">Clase: <?php echo $resultado[1] ?></h6>
-
-                                            <h6 class="h5 mt-5 mb-4 text-gray-800">A continuación, puede modificar la lista de estudiantes para la clase:</h6>
-
-                                            <?php
-                                            
-                                            endforeach;
-                                            }
-                                        }
-                                        if (isset($_GET['clase'])){
-                                            
-                                            ?>
-                                            <div>
-                                                <select class="form-control" name="estudiantes" id="estudiantes" value="">
-                                                <?php
-                                                if(!empty($estudiantes)){
-
-                                                foreach ($estudiantes as $estudiante) : 
-                                                ?>
-                                                    <option value="<?php echo $estudiante[0] ?>"><?php echo $estudiante[1]." ";  echo $estudiante[2]." "; echo $estudiante[3]." "; ?></option>
-
-                                                <?php
-                                                endforeach;
-                                                }
-                                                ?>
-                                                    
-                                                </select>
-                                            </div>
-
-                                            <a class="btn btn-success mt-3 mb-4" id="agregarLista">
-                                                Agregar a la lista
-                                            </a>
-
-                                            <table class="table table-bordered">
-                                                <thead>
-                                                    <tr>
-                                                        <th>Nombre</th>
-                                                        <th>Apellido Paterno</th>
-                                                        <th>RUT</th>
-                                                        <th>E-mail</th>
-                                                        <th></th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody id="tablaLista">
-                                                    
-                                                    
-                                                </tbody>
-                                            </table>
-                                            
-                                            <input type="hidden" name="idClase" value="<?php echo $id ?>">
-                                            
-                                        </div>
-                                        
-                                        <hr>
-                                        <button class="btn btn-success mt-3" id="iniciarClase_submit" type="submit">
-                                            Iniciar clase
-                                        </button>
-
-                                        <?php
-                                        }
-                                        ?>
-
-                                        <!-- <hr>
-                                        <a href="index.html" class="btn btn-google btn-user btn-block">
-                                            <i class="fab fa-google fa-fw"></i> Login with Google
-                                        </a>
-                                        <a href="index.html" class="btn btn-facebook btn-user btn-block">
-                                            <i class="fab fa-facebook-f fa-fw"></i> Login with Facebook
-                                        </a> -->
-                                    </form>
-                            </div>
-
-                    <!-- FIN DE SELECCION DE CLASE -->
-                
-                </div>
+                                endforeach;
+                                }
+                                ?>
+                        </select>
+                    </div>
+                    <button class="btn btn-info btn-user mt-3" type="submit">Continuar</button>
+                </form>
             </div>
-            <!-- End of Main Content -->
+        </div>
+    </div>
 
+    <?php
+        if (isset($_GET['clase'])){
+
+
+                $id = $_GET['clase'];
+                $resultados = obtenerClaseEspecifica($con, $id);
+
+                if(!empty($resultados)){
+
+                    foreach ($resultados as $resultado) : 
+                    
+    ?>
+
+    <div class="container-fluid card-style mb-5 pb-4">
+        <div class="row">
+            <div class="col" align="left">
+                <h1 class="h3 mt-2 mb-4 text-gray-800">Clase: <?php echo $resultado[1] ?></h1>
+            </div>
+        </div>
+        <div class="card">
+        <div class="card-body">
+            <div class="table-responsive">
+                    <form class="user" method="POST" id="form_clase" action="iniciarClase_action.php">
+                        <div class="form-group">
+                            
+                            <h6 class="h5 mb-4 text-gray-800">A continuación, puede modificar la lista de estudiantes para la clase:</h6>
+
+                            <?php
+                            endforeach;
+                            }
+                            ?>
+                            <div>
+                                <select class="form-control" name="estudiantes" id="estudiantes" value="">
+                                <?php
+                                if(!empty($estudiantes)){
+
+                                foreach ($estudiantes as $estudiante) : 
+                                ?>
+                                    <option value="<?php echo $estudiante[0] ?>"><?php echo $estudiante[1]." ";  echo $estudiante[2]." "; echo $estudiante[3]." "; ?></option>
+                                <?php
+                                endforeach;
+                                }
+                                ?>  
+                                </select>
+                            </div>
+                            <a class="btn btn-info mt-3 mb-4" id="agregarLista">Agregar a la lista</a>
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>Nombre</th>
+                                        <th>Apellido Paterno</th>
+                                        <th>RUT</th>
+                                        <th>E-mail</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tablaLista">
+                                </tbody>
+                            </table>
+                            <input type="hidden" name="idClase" value="<?php echo $id ?>">
+                        </div>
+                            <button class="btn btn-success mt-3" id="iniciarClase_submit" type="submit">Iniciar clase</button>
+                    </form>
+            </div>
+        </div>
+        </div>
+    </div>
+    <?php
+    }
+    ?>
+</div>
+<!-- End of Main Content -->
 <?php
 
     include 'footer.php';
 
 ?>
+
 <script type="text/javascript">
 	function recargarLista(){
 		$.ajax({
@@ -208,9 +174,6 @@
 		});
 	})
 </script>
-
-
-
 <script>
     $(document).ready(function(){
     

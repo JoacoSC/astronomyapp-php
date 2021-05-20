@@ -129,7 +129,7 @@ $(document).ready(function(){
 				beforeSend:function()
 				{
 					$('#submit_button').attr('disabled', 'disabled');
-					$('#submit_button').val('wait...');
+					$('#submit_button').val('Espere...');
 				},
 				success:function(data)
 				{

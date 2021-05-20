@@ -20,10 +20,8 @@ function validar_input_email($emailValue){
     return '';
 }
 
-//PUEDO ALMACENAR LOS NOMBRES CON MAYUSCULAS
-
 function get_user_info($con, $id){
-    $query = "SELECT id, nombre, apellido_pat, apellido_mat, rut, email, contraseña, telefono, fecha_nac, region, comuna, role FROM teacher_srms WHERE id=?";
+    $query = "SELECT * FROM teacher_srms WHERE id=?";
     $q = mysqli_stmt_init($con);
 
     mysqli_stmt_prepare($q, $query);
@@ -90,19 +88,20 @@ function obtenerEstudiantes($con, $email){
     }
 }
 
-function actualizarDatos($con){
+function actualizarDatos($con, $teacher_email){
 
     $cero = 0;
 
     $query = "SELECT data_srms.student_id, data_srms.clase_en_vivo, data_srms.num, student_srms.student_name 
-    FROM data_srms INNER JOIN student_srms ON data_srms.student_id = student_srms.student_id WHERE data_srms.clase_en_vivo != 0";
+    FROM data_srms INNER JOIN student_srms ON data_srms.student_id = student_srms.student_id WHERE data_srms.clase_en_vivo != 0 
+    AND student_srms.email_profesor = ?";
 
     $q = mysqli_stmt_init($con);
 
     mysqli_stmt_prepare($q, $query);
 
     // bind the statement
-    /* mysqli_stmt_bind_param($q, 'i', $cero); */
+    mysqli_stmt_bind_param($q, 's', $teacher_email);
 
     // execute sql statement
     mysqli_stmt_execute($q);
@@ -594,6 +593,34 @@ function obtenerClasesHabilitadasTeacher($con, $teacher_id){
 
     // bind the statement
     mysqli_stmt_bind_param($q, 's', $teacher_id);
+
+    // execute sql statement
+    mysqli_stmt_execute($q);
+    $result = mysqli_stmt_get_result($q);
+
+    $row = mysqli_fetch_all($result);
+
+    /* return empty($row) ? false : $row; */
+
+    if(!empty($row)){
+
+        return $row;
+    }else{
+
+        return false;
+    }
+}
+
+function obtenerEstudiantesTeacher($con, $email){
+
+    $query = "SELECT * FROM student_srms WHERE email_profesor=?";
+
+    $q = mysqli_stmt_init($con);
+
+    mysqli_stmt_prepare($q, $query);
+
+    // bind the statement
+    mysqli_stmt_bind_param($q, 's', $email);
 
     // execute sql statement
     mysqli_stmt_execute($q);

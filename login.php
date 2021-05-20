@@ -21,6 +21,61 @@
     <div class="text-center">
         <h1 class="h4 text-gray-900 mb-4">Bienvenido de nuevo!</h1>
     </div>
+    <span id="message">
+        <?php
+            if(isset($_GET["deshabilitado"]) && $_GET["deshabilitado"] == 'true')
+            {
+        ?>
+            <div class="alert alert-danger alert-dismissible fade show mt-3" id="success-alert" onload="showAlert()">
+                <strong>Error!</strong> Usted está deshabilitado del sistema, por favor contáctese con el administrador.
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        <?php
+            }
+        ?>
+        <?php
+            if(isset($_GET["not_record"]) && $_GET["not_record"] == 'true')
+            {
+        ?>
+            <div class="alert alert-danger alert-dismissible fade show mt-3" id="success-alert" onload="showAlert()">
+                <strong>Error!</strong> Usted no está registrado en el sistema.
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        <?php
+            }
+        ?>
+        <?php
+            if(isset($_GET["fallo"]) && $_GET["fallo"] == 'true')
+            {
+        ?>
+            <div class="alert alert-danger alert-dismissible fade show mt-3" id="success-alert" onload="showAlert()">
+                <strong>Error!</strong> La contraseña ingresada es incorrecta.
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        <?php
+            }
+        ?>
+        <?php
+            if(isset($_GET["no_activado"]) && $_GET["no_activado"] == 'true')
+            {
+        ?>
+            <div class="alert alert-danger alert-dismissible fade show mt-3" id="success-alert" onload="showAlert()">
+                <strong>Error!</strong> Debe activar su cuenta, por favor revise su correo electrónico. En caso de que no encuentre
+                su correo de activación, no olvide verificar la carpeta de SPAM.
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        <?php
+            }
+        ?>
+    </span>
     <form class="user" method="POST" action="login.php">
         <div class="form-group">
             <input type="email" class="form-control form-control-user"

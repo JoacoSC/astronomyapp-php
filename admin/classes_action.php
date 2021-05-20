@@ -6,6 +6,8 @@ include('srms.php');
 
 $object = new srms();
 
+include('../connection.php');
+
 if(isset($_POST["action"]))
 {
 	if($_POST["action"] == 'fetch')

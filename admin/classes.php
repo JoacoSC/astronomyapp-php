@@ -281,7 +281,7 @@ $(document).ready(function(){
 				beforeSend:function()
 				{
 					$('#submit_button').attr('disabled', 'disabled');
-					$('#submit_button').val('wait...');
+					$('#submit_button').val('Espere...');
 				},
 				success:function(data)
 				{
@@ -461,7 +461,7 @@ $(document).ready(function(){
                 beforeSend:function()
                 {
                     $('#subject_form_submit_button').attr('disabled', 'disabled');
-                    $('#subject_form_submit_button').val('wait...');
+                    $('#subject_form_submit_button').val('Espere...');
                 },
                 success:function(data)
                 {
@@ -469,7 +469,7 @@ $(document).ready(function(){
                     if(data.error != '')
                     {
                         $('#subject_form_message').html(data.error);
-                        $('#subject_form_submit_button').val('Add');
+                        $('#subject_form_submit_button').val('Agregar');
                     }
                     else
                     {

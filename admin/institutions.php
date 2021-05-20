@@ -136,7 +136,7 @@ $array_cantInscritos = array();
                     beforeSend:function()
                     {
                         $('#submit_button').attr('disabled', 'disabled');
-                        $('#submit_button').val('wait...');
+                        $('#submit_button').val('Espere...');
                     },
                     success:function(data)
                     {

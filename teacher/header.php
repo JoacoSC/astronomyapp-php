@@ -107,7 +107,7 @@
                     data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <a class="collapse-item" href="registroEstudiantes.php">Registrar estudiantes</a>
-                        <a class="collapse-item" href="misEstudiantes.php">Lista de mis estudiantes</a>
+                        <a class="collapse-item" href="students.php">Lista de mis estudiantes</a>
                     </div>
                 </div>
             </li>
@@ -151,6 +151,8 @@
                     <!-- Topbar Navbar -->
                     <ul class="navbar-nav ml-auto">
 
+                    <div class="topbar-divider d-none d-sm-block"></div>
+
                         </li>
 
                         <?php
@@ -178,7 +180,7 @@
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
                                     <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Logout
+                                    Cerrar Sesión
                                 </a>
                             </div>
                         </li>

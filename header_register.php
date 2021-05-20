@@ -2,6 +2,9 @@
     if($_SERVER['REQUEST_METHOD']=='POST'){
         require('register_action.php');
     }
+    include ('helper.php');
+    include ('connection.php');
+    $instituciones = obtenerInstitucionesAdmin($con);
 ?>
 
 <!DOCTYPE html>
@@ -36,6 +39,6 @@
             <div class="card-body p-0">
                 <!-- Nested Row within Card Body -->
                 <div class="row">
-                    <div class="col-lg-5 d-none d-lg-block bg-register-image"></div>
-                    <div class="col-lg-7">
+                    <div class="col-lg-4 d-none d-lg-block bg-register-image"></div>
+                    <div class="col-lg-8">
                         <div class="p-5">

@@ -4,7 +4,7 @@ include('header.php');
 
 ?>
 
-    <div class="container-fluid card-style mb-5 pb-4">
+    <div class="container-fluid col-md-8 card-style mb-5 pb-4">
     <form method="post" action="profile_action.php" id="profile_form" enctype="multipart/form-data">
     <!-- Page Heading -->
     <div class="row">
@@ -12,7 +12,7 @@ include('header.php');
             <h1 class="h3 mt-2 mb-4 text-gray-800">Perfil</h1>
         </div>
         <div class="col" align="right">
-            <button type="submit" name="guardar_cambios" id="guardar_cambios" class="btn btn-info btn-sm mt-3 mr-2">Guardar cambios&nbsp;&nbsp;<i class="fas fa-edit"></i></button>
+            <button type="submit" name="guardar_cambios" id="guardar_cambios" class="btn btn-info btn-sm mt-3 "><i class="fas fa-edit"></i> Confirmar cambios</button>
         </div>
     </div>
     
@@ -35,7 +35,7 @@ include('header.php');
     <div class="card">
     
         <div class="row">
-            <div class="col-md-10">
+            <div class="col-md-12">
                 <div class="card-body">
                     <div class="form-group">
                         <label>Nombre</label>

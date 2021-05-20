@@ -82,6 +82,7 @@
                                             <th>DV</th>
                                             <th>E-mail</th>
                                             <th style="min-width:150px">Institución</th>
+                                            <th>Activación por email</th>
                                             <th>Estado</th>
                                             <th>Acciones</th>
                                         </tr>
@@ -112,6 +113,12 @@
                                         <td><?php echo $profesor[5] ?></td>
                                         <td><?php echo $profesor[6] ?></td>
                                         <td><?php echo ($array_instProf[$i][0][1]. " - ". $array_instProf[$i][0][2]) ?></td>
+                                        <td><?php if($profesor[16] == 0){
+                                            echo 'NO';
+                                        }else{
+                                            echo 'SI';
+                                        }
+                                        ?></td>
                                         <td>
                                         <?php
 
@@ -262,7 +269,7 @@ $(document).ready(function(){
 				beforeSend:function()
 				{
 					$('#submit_button').attr('disabled', 'disabled');
-					$('#submit_button').val('wait...');
+					$('#submit_button').val('Espere...');
 				},
 				success:function(data)
 				{

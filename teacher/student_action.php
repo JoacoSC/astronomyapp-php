@@ -137,7 +137,7 @@ if(isset($_POST["action"]))
 		
 		if($row_count > 0)
 		{
-			$error = '<div class="alert alert-danger"><b>Error! </b>El email del estudiante ya está registrado con ese profesor</div>';
+			$error = '<div class="alert alert-danger"><b>Error! </b>El email del estudiante ya está registrado con usted</div>';
 		}
 		else
 		{
@@ -149,7 +149,7 @@ if(isset($_POST["action"]))
 			$email 		=	$_POST["student_email"];
 			$dob 		=	$_POST["student_dob"];
 			/* if($_POST["student_teacher_email"] != 'otro'){ */
-				$tea_email 		=	$_POST["student_teacher_email"];
+			$tea_email 		=	$_POST["student_teacher_email"];
 			/* }else{
 				$tea_email 		=	$_POST["other_student_teacher_email"];
 			} */

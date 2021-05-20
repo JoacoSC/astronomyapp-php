@@ -17,7 +17,7 @@ if (empty($contraseña)){
 
 if (empty($error)){
     // sql query
-    $query = "SELECT id, nombre, apellido_pat, apellido_mat, rut, email, contraseña, telefono, fecha_nac, region, comuna, role FROM teacher_srms WHERE email=?";
+    $query = "SELECT * FROM teacher_srms WHERE email=?";
     $q = mysqli_stmt_init($con);
     mysqli_stmt_prepare($q, $query);
 
@@ -31,28 +31,31 @@ if (empty($error)){
     $row = mysqli_fetch_array($result, MYSQLI_ASSOC);
 
     if (!empty($row)){
-
-        // *******************************************************************************************
-
-        // AQUI ESTOY COMPARANDO LAS CONTRASEÑAS
-        // LA QUE DICE $contraseña ES LA QUE VIENE DEL $_POST Y NO ESTÁ HASHEADA, LA $row['contraseña'] 
-        // ES LA CONTRASEÑA EN LA BASE DE DATOS
-
+    
         if(password_verify($contraseña, $row['contraseña'])){
-        
-        // *******************************************************************************************
 
-            // create session variable
-            /* $_SESSION['id'] = mysqli_insert_id($con); */
-            $_SESSION['id'] = $row['id'];
-            print "Ingresaste correctamente";
-            echo $_SESSION['id'];
-        
-            header("location: teacher/index.php");
-            exit();
+            if($row['activation'] != 0){
+
+                if($row['teacher_status'] != 'Habilitado'){
+
+                    header("location: login.php?deshabilitado=true");
+
+                }else{
+            
+                $_SESSION['id'] = $row['id'];
+                print "Ingresaste correctamente";
+                echo $_SESSION['id'];
+            
+                header("location: teacher/index.php");
+                exit();
+                }
+            }else{
+                header("location: login.php?no_activado=true");
+            }
         }else{
             header("location: login.php?fallo=true");
         }
+    
     }else{
 
         $query = "SELECT * FROM student_srms WHERE student_email_id=?";
@@ -71,6 +74,9 @@ if (empty($error)){
         if (!empty($row)){
             // verify password
             if(password_verify($contraseña, $row['hashed_pass'])){
+                if($row['student_status'] != 'Habilitado'){
+                    header("location: login.php?deshabilitado=true");
+                }else{
                 
                 // create session variable
                 /* $_SESSION['id'] = mysqli_insert_id($con); */
@@ -79,13 +85,16 @@ if (empty($error)){
                 /* print_r ($row); */
                 header("location: student/index.php");
                 exit();
+                }
             }else{
                 header("location: login.php?fallo=true");
             }
+            
         }else{
-            print "No estás registrado!";
+            header("location: login.php?not_record=true");
         }
     }
+    
 
 }else{
     echo "Por favor ingresa tus datos para ingresar";

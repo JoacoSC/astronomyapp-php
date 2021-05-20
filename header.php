@@ -108,7 +108,7 @@
                     data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <a class="collapse-item" href="registroEstudiantes.php">Registrar estudiantes</a>
-                        <a class="collapse-item" href="misEstudiantes.php">Lista de mis estudiantes</a>
+                        <a class="collapse-item" href="students.php">Lista de mis estudiantes</a>
                     </div>
                 </div>
             </li>

@@ -1,6 +1,9 @@
 <?php 
+session_start();
 include ('../helper.php');
 include ('../connection.php');
+
+$user = get_user_info($con, $_SESSION['id']);
 
 $cardbody = '<div id="show" class="card-body">';
 
@@ -8,7 +11,7 @@ $content = '';
 
 $endCardBody = '</div>';
 
-$row = actualizarDatos($con);
+$row = actualizarDatos($con, $user['email']);
 
 /* echo $row['num']; */
 

@@ -29,13 +29,13 @@ if (empty($error)){
      // execute statement
      mysqli_stmt_execute($q);
 
-     /* if(mysqli_stmt_affected_rows($q) > 0){
+     if(mysqli_stmt_affected_rows($q) > 0){
 
         print "Actualizado correctamente";
          
      }else{
          print "Error al actualizar!";
-     } */
+     }
 
     //INSERTANDO CEROS PARA ACTUALIZAR A TODOS LOS ESTUDIANTES
 
@@ -65,6 +65,29 @@ if (empty($error)){
             print "Error al actualizar!";
         }
 
+        //INSERTANDO CEROS PARA ACTUALIZAR LA TABLA DE DATOS (num)
+
+        $query = "UPDATE data_srms SET num=? WHERE student_id=?";
+        
+        $q = mysqli_stmt_init($con);
+        mysqli_stmt_prepare($q, $query);
+
+        // bind parameter
+        mysqli_stmt_bind_param($q, 'is', $cero, $id);
+        
+        // execute statement
+        mysqli_stmt_execute($q);
+
+        if(mysqli_stmt_affected_rows($q) > 0){
+
+            print "Actualizado correctamente";
+            
+        }else{
+            print "Error al actualizar!";
+        }
+
+        //INSERTANDO CEROS PARA ACTUALIZAR LA TABLA DE DATOS (num)
+
         $query = "INSERT INTO data_srms (student_id, clase_en_vivo) VALUES(?, ?) ON DUPLICATE KEY UPDATE clase_en_vivo=?";
         
         $q = mysqli_stmt_init($con);
@@ -76,17 +99,12 @@ if (empty($error)){
         // execute statement
         mysqli_stmt_execute($q);
 
-        if(mysqli_stmt_affected_rows($q) > 0){
-
-
-            echo ($id . ": Tabla de estadísticas actualizada correctamente<br>");
-            $validador++;
+        echo ($id . ": Tabla de estadísticas actualizada correctamente<br>");
+        $validador++;
                 /* header('location: modificar_producto.php?exito=true');
                 exit(); */
                 /* echo "<div style='color:green'><h6>Producto ingresado correctamente!</h6></div>"; */
-        }else{
-            print "Error al actualizar!";
-        }
+        
         
 
     endforeach;

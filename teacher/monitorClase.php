@@ -9,39 +9,22 @@
     </div> -->
     
                 <!-- Begin Page Content -->
-                <div class="container-fluid">
-
-                    
-                        <!-- ******************** DIV DE GENERACION DE GRAFICOS ********************* -->
-
-                        
-                            <!-- Project Card Example -->
-                            <div class="card shadow mt-5 mb-4">
-                                <div class="card-header py-3">
-                                
-                                    <h6 class="h3 mb-0 text-gray-800">Progreso de los estudiantes: </h6>
-                                </div>
-
-                                
-
-                                <div id="show" class="card-body">
-                                    
-                                </div>
-
-                                <form class="user" method="POST" id="form_clase" action="terminarClase_action.php">
-
-                                    <input type="hidden" name="idClase" value="<?php echo $_GET['clase'] ?>">
-
-                                    <button class="btn btn-danger mt-3" id="terminarClase_submit" type="submit">Terminar clase</button>
-                                </form>
+                <div class="container-fluid card-style mb-5 pb-4">
+                <div class="row">
+                    <div class="col" align="left">
+                        <h1 class="h3 mt-2 mb-4 text-gray-800">Progreso de los estudiantes</h1>
+                    </div>
+                </div>
+                    <div class="card">
+                        <div class="card-body">
+                            <div id="show">
                             </div>
-
-                            
-
-                            <!-- ******************** DIV DE GENERACION DE GRAFICOS ********************* -->
-
-                    
-
+                            <form class="user" method="POST" id="form_clase" action="terminarClase_action.php">
+                                <input type="hidden" name="idClase" value="<?php echo $_GET['clase'] ?>">
+                                <button class="btn btn-danger mt-3" id="terminarClase_submit" type="submit">Terminar clase</button>
+                            </form>
+                        </div>
+                    </div>
                 </div>
                 <!-- /.container-fluid -->
 

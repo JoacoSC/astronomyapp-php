@@ -72,8 +72,8 @@ if($_FILES["import_excel"]["name"] != '')
     $apellido_mat  = $row[3],
     $rut  = $row[4],
     $dv  = $row[5],
-    $email  = $row[6],
-    $institucion  = $row[7]
+    $email  = $row[6]
+    
     
    );
 
@@ -86,6 +86,7 @@ if($_FILES["import_excel"]["name"] != '')
 
    $hashed_pass = password_hash($contraseña, PASSWORD_DEFAULT);
 
+   $institucion = $user['institution'];
    $email_profesor = $user['email'];
 
    $query = "INSERT INTO student_srms (student_name, student_father_lastname, student_mother_lastname, rut, dv, student_email_id, hashed_pass, institution, email_profesor)"; 

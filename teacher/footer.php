@@ -25,15 +25,15 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Listo para irte?</h5>
                     <button class="close" type="button" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">×</span>
                     </button>
                 </div>
-                <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+                <div class="modal-body">Presiona "Cerrar Sesión" para terminar la sesión actual.</div>
                 <div class="modal-footer">
-                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                    <a class="btn btn-primary" href="logout.php">Logout</a>
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancelar</button>
+                    <a class="btn btn-primary" href="logout.php">Cerrar Sesión</a>
                 </div>
             </div>
         </div>
@@ -53,7 +53,7 @@
     <script src="../vendor/datatables/jquery.dataTables.js"></script>
     <!-- <script src="../vendor/datatables/dataTables.bootstrap4.js"></script> -->
     <script src="../vendor/datatables/fixedcolumns-3.3.2/js/fixedcolumns.bootstrap.min.js"></script>
-    <script type="text/javascript" src="../vendor/DataTables/datatables.min.js"></script>
+    <script type="text/javascript" src="../vendor/DataTables/datatables.js"></script>
 
     <!-- Page level custom scripts -->
     <!-- <script src="../js/demo/datatables-demo.js"></script> -->

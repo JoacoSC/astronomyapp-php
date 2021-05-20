@@ -1,6 +1,6 @@
 <?php
     
-    include('srms.php');
+    /* include('srms.php');
 
     $object = new srms();
 
@@ -12,41 +12,27 @@
     if(!$object->is_master_user())
     {
         header("location:".$object->base_url."admin/result.php");
-    }
+    } */
 
     include('header.php');
     
-    include ('../helper.php');
+    /* include ('../helper.php'); */
 
-    $user = array();
-
-    $estudiantes = obtenerEstudiantesAdmin($con);
+    
+    $estudiantes = obtenerEstudiantesTeacher($con, $user['email']);
     $profesores = obtenerProfesoresAdmin($con);
     $instituciones = obtenerInstitucionesAdmin($con);
 
     $array_instStud = array();
-    foreach ($estudiantes as $estudiante) : 
-        $array_instStud[] = obtenerInstitucionTablaAdmin($con, $estudiante[12]);
-    endforeach;
+    if(!empty($estudiantes)){
+        foreach ($estudiantes as $estudiante) : 
+            $array_instStud[] = obtenerInstitucionTablaAdmin($con, $estudiante[12]);
+        endforeach;
+    }
+    
     /* print_r ($estudiantes); */
     
-    if(isset($_SESSION['id'])){
-        /* print "entré"; */
-        /* require ('connection.php'); */
-        $user = get_user_info($con, $_SESSION['id']);
-        
-        /* $estudiantes = obtenerEstudiantesAdmin($con);
-        print_r ($estudiantes); */
-        /* echo "entre"; */
-        /* echo isset($user[0]); */
-        /* foreach ($user as $key => $value) {
-            echo "Key: $key; Value: $value\n<br>";
-        } */
-    }else{
-        /* print "no entré"; */
-    }
-
-
+    
 ?>
 
                 <!-- Begin Page Content -->
@@ -83,8 +69,7 @@
                                             <th>RUT</th>
                                             <th>DV</th>
                                             <th>E-mail</th>
-                                            <th style="min-width:150px">Institución</th>
-                                            <th>E-mail de su profesor</th>
+                                            <th style="min-width:200px">Institución</th>
                                             <th>Estado</th>
                                             <th>Acciones</th>
                                         </tr>
@@ -115,7 +100,6 @@
                                         <td><?php echo $estudiante[5] ?></td>
                                         <td><?php echo $estudiante[6] ?></td>
                                         <td><?php echo ($array_instStud[$i][0][1]. " - ". $array_instStud[$i][0][2]) ?></td>
-                                        <td><?php echo $estudiante[10] ?></td>
                                         <td>
                                         <?php
 
@@ -152,7 +136,7 @@
                                 </table>
                             </div>
                         </div>
-                    </div>
+                    </div></div>
 
                 
                 <!-- /.container-fluid -->
@@ -203,23 +187,7 @@ include 'footer.php';
                         <input type="date" name="student_dob" id="student_dob" class="form-control datepicker" required data-parsley-trigger="keyup" />
                     </div>
                     <div class="form-group">
-                        <label>Email de profesor encargado</label>
-
-                        <select type="text" name="student_teacher_email" id="student_teacher_email" class="form-control" data-parsley-trigger="keyup">
-
-							<?php
-								foreach ($profesores as $profesor) {
-								?>
-									<option value="<?php echo $profesor[6] ?>"><?php echo $profesor[1].' '.$profesor[2].' '.$profesor[3].' - ('.$profesor[6].')' ?></option>
-								<?php
-							}
-							?>
-                            <!-- <option value="otro">Otro...</option> -->
-						</select>
-                        <!-- <div class="form-group mt-2">
-                        <label>Ingrese otro email de profesor encargado a continuación: </label>
-                        <input type="text" name="other_student_teacher_email" class="form-control hidden-textbox" data-parsley-trigger="keyup" />
-                        </div> -->
+                        <input type="hidden" name="student_teacher_email" value="<?php echo $user['email']?>">
                         
                     </div>
                     <div class="form-group">

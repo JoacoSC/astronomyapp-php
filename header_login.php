@@ -44,6 +44,7 @@
 
     <!-- Custom styles for this template-->
     <link href="css/sb-admin-2.css" rel="stylesheet">
+    <link href="css/styles.css" rel="stylesheet">
 
 </head>
 
@@ -60,6 +61,9 @@
                     <div class="card-body p-0">
                         <!-- Nested Row within Card Body -->
                         <div class="row">
-                            <div class="col-lg-6 d-none d-lg-block bg-login-image"></div>
+                            <div class="col-lg-6 d-none d-lg-block center">
+                                <img class="pt-5 px-5 mb-3" src="img/logo_grande.png" style="max-width: 60%" alt="">
+                                <img src="img/undraw_login_bg.svg" style="max-width: 100%" alt="">
+                            </div>
                             <div class="col-lg-6">
                                 <div class="p-5">
