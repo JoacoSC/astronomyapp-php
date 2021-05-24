@@ -42,7 +42,7 @@ if(isset($_POST["hidden_action"]))
 		}
 		else
 		{
-			$order_query = 'ORDER BY subject_id DESC ';
+			$order_query = 'ORDER BY subject_id ASC ';
 		}
 
 		$limit_query = '';

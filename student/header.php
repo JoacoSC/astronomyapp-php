@@ -69,114 +69,45 @@
         <div id="content-wrapper" class="d-flex flex-column">
 
             <!-- Main Content -->
-            <div class="background" id="content">
+            <div class="student_background" id="content">
 
                 <!-- Topbar -->
-                <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top">
+                <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top nav-shadow">
                 
-                <div class="col-3">
-                    <div class="text-center header_logo">
-                        <img class="img-fluid" src="../img/logo_grande.png" alt="">
+                    <div class="col-3">
+                        <div class="text-center header_logo">
+                        <a href="index.php"><img class="img-fluid" src="../img/logo_grande.png" alt=""></a>
+                        </div>
+                        
                     </div>
-                    <a href="iniciarClase.php" class="stretched-link"></a>
-                </div>
-                
-
-                    <!-- Sidebar Toggle (Topbar) -->
-                    <!-- <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
-                        <i class="fa fa-bars"></i>
-                    </button> -->
 
                     <!-- Topbar Navbar -->
                     <ul class="navbar-nav ml-auto">
 
-                    <div class="topbar-divider d-none d-sm-block"></div>
-
-                        </li>
-
-                        <?php
-
-                        if (isset( $_SESSION['id'])){
-                            $role = $user['role'];
-
-                            if($role == 'profesor'){
-                                ?>
-
-                                <li class="nav-item dropdown no-arrow">
-                            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
-                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="mr-4 d-none d-lg-inline text-gray-600 small"><?php echo $user['nombre'] . " " . $user['apellido_pat'] ?> </span>
-                                <img class="img-profile rounded-circle"
-                                    src="../img/undraw_profile.svg">
-                            </a>
-                            <!-- Dropdown - User Information -->
-                            <div class="dropdown-menu dropdown-menu-right profile-menu-shadow animated--grow-in"
-                                aria-labelledby="userDropdown">
-                                <a class="dropdown-item" href="profile.php">
-                                    <i class="fas fa-edit fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Editar perfil
-                                </a>
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
-                                    <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Cerrar Sesión
-                                </a>
-                            </div>
-                        </li>
-
-                        <?php
-
-                        }else if ($role == 'student'){
-                            ?>
+                    <!-- <div class="topbar-divider d-none d-sm-block"></div> -->
 
                             <li class="nav-item dropdown no-arrow">
-                            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
-                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="mr-4 d-none d-lg-inline text-gray-600 small"><?php echo $user['student_name'] . " " . $user['student_father_lastname'] ?> </span>
-                                <img class="img-profile rounded-circle"
-                                    src="../img/undraw_profile_1.svg">
-                            </a>
-                            <!-- Dropdown - User Information -->
-                            <div class="dropdown-menu dropdown-menu-right profile-menu-shadow animated--grow-in"
-                                aria-labelledby="userDropdown">
-                                <a class="dropdown-item" href="profile.php">
-                                    <i class="fas fa-edit fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Editar perfil
+                                <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
+                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <span class="mr-1 d-none d-lg-inline astronomy-font"><?php echo $user['student_name']?></span>
+                                    <span class="mr-4 d-none d-lg-inline app-font"><?php echo $user['student_father_lastname'] ?> </span>
+                                    <img class="img-profile rounded-circle"
+                                        src="../img/undraw_profile_1.svg">
                                 </a>
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
-                                    <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Cerrar Sesión
-                                </a>
-                            </div>
-                        </li>
-
-                            <?php
-                        }else if ($role == 'administrador'){
-                            ?>
-
-                            <p>Hola admin</p>    
-
-                            <?php
-                        }
-                    }else{
-                        ?>
-
-                            <div class="d-sm-flex align-items-center justify-content-between">
-                            
-                                <a href="login.php" class="d-none d-sm-inline-block btn btn-sm btn-info shadow-sm mr-3"><i
-                                        class="fas fa-sm text-white-50"></i> Iniciar Sesión </a>
-
-                                <a href="register.php" class="d-none d-sm-inline-block btn btn-sm btn-danger shadow-sm mr-3"><i
-                                    class="fas fa-sm text-white-50"></i> Registrarse </a>
-                            </div>
-
-                    <?php
-                        }
-                    ?>
-
-                        <!-- Nav Item - User Information -->
-                        
+                                <!-- Dropdown - User Information -->
+                                <div class="dropdown-menu dropdown-menu-right profile-menu-shadow animated--grow-in"
+                                    aria-labelledby="userDropdown">
+                                    <a class="dropdown-item" href="profile.php">
+                                        <i class="fas fa-edit fa-sm fa-fw mr-2 text-gray-400"></i>
+                                        Editar perfil
+                                    </a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
+                                        <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                                        Cerrar Sesión
+                                    </a>
+                                </div>
+                            </li>
 
                     </ul>
 

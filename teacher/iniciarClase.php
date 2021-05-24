@@ -4,6 +4,10 @@
     $clases = obtenerClasesHabilitadasTeacher($con, $user['id']);
     $estudiantes = obtenerEstudiantes($con, $user['email']);
 
+    
+    
+    /* echo ($_SESSION['subjects_array'][0]['subject_id']); */
+
 ?>
 
     <!-- <div id="sendCtrls">

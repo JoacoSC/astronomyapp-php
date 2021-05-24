@@ -62,9 +62,9 @@
           <nav class="site-navigation position-relative text-right" role="navigation">
 
             <ul class="site-menu main-menu js-clone-nav mr-auto d-none d-lg-block">
-              <li class="active"><a href="#" class="nav-link">Home</a></li>
-              <li><a href="#" class="nav-link">Features</a></li>
-              <li><a href="#" class="nav-link">Pricing</a></li>
+              <li class="active"><a href="#" class="nav-link">Inicio</a></li>
+              <!-- <li><a href="#" class="nav-link">Features</a></li>
+              <li><a href="#" class="nav-link">Pricing</a></li> -->
 
               <li>
                 <a href="login.php" class="nav-link">Iniciar Sesión</a>
@@ -167,7 +167,7 @@
       </div>
     </section>
 
-    <section class="section">
+    <!-- <section class="section">
 
       <div class="container">
         <div class="row justify-content-center text-center mb-5" data-aos="fade">
@@ -235,7 +235,7 @@
           </div>
         </div>
       </div>
-    </section>
+    </section> -->
 
     <!-- ======= Testimonials Section ======= -->
     <section class="section border-top border-bottom">
@@ -264,7 +264,7 @@
                 </blockquote>
 
                 <p class="review-user">
-                  <img src="assets/img/person_1.jpg" alt="Image" class="img-fluid rounded-circle mb-3">
+                  <img src="img/undraw_profile_1.svg" alt="Image" class="img-fluid rounded-circle mb-3">
                   <span class="d-block">
                     <span class="text-black">Jean Doe</span>, &mdash; App User
                   </span>
@@ -288,7 +288,7 @@
                 </blockquote>
 
                 <p class="review-user">
-                  <img src="assets/img/person_2.jpg" alt="Image" class="img-fluid rounded-circle mb-3">
+                  <img src="img/undraw_profile_2.svg" alt="Image" class="img-fluid rounded-circle mb-3">
                   <span class="d-block">
                     <span class="text-black">Johan Smith</span>, &mdash; App User
                   </span>
@@ -312,7 +312,7 @@
                 </blockquote>
 
                 <p class="review-user">
-                  <img src="assets/img/person_3.jpg" alt="Image" class="img-fluid rounded-circle mb-3">
+                  <img src="img/undraw_profile_3.svg" alt="Image" class="img-fluid rounded-circle mb-3">
                   <span class="d-block">
                     <span class="text-black">Jean Thunberg</span>, &mdash; App User
                   </span>

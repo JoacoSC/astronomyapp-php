@@ -46,15 +46,17 @@ if (empty($error)){
 
         foreach ($row as $idEstudiante):
 
-            print ($idEstudiante);
+            /* print_r ($idEstudiante); */
+            echo ($idEstudiante[0]);
+            $student_id = $idEstudiante[0];
 
-            $query = "UPDATE data_srms SET clase_en_vivo=? , num=? WHERE student_id=?";
+            $query = "UPDATE data_srms SET clase_en_vivo=0, current_subject_id=0, num=0 WHERE student_id=?";
     
             $q = mysqli_stmt_init($con);
             mysqli_stmt_prepare($q, $query);
 
             // bind parameter
-            mysqli_stmt_bind_param($q, 'iii', $cero, $cero, $idEstudiante[0]);
+            mysqli_stmt_bind_param($q, 'i', $student_id);
             
             // execute statement
             mysqli_stmt_execute($q);
