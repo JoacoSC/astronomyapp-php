@@ -13,7 +13,7 @@ $endCardBody = '</div>';
 
 $row = actualizarDatos($con, $user['email']);
 
-/* echo $row['num']; */
+/* echo $row['progress']; */
 
 
 

@@ -4,7 +4,7 @@ include('header.php');
 
 ?>
 
-    <div class="container-fluid card-style mb-5 pb-4">
+    <div class="container-fluid student-card-style mb-5 pb-4">
     <form method="post" action="profile_action.php" id="profile_form" enctype="multipart/form-data">
     <!-- Page Heading -->
     <div class="row">

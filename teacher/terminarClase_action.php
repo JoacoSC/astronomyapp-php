@@ -50,7 +50,7 @@ if (empty($error)){
             echo ($idEstudiante[0]);
             $student_id = $idEstudiante[0];
 
-            $query = "UPDATE data_srms SET clase_en_vivo=0, current_subject_id=0, num=0 WHERE student_id=?";
+            $query = "UPDATE data_srms SET clase_en_vivo=0, current_subject_id=0, progress=0 WHERE student_id=?";
     
             $q = mysqli_stmt_init($con);
             mysqli_stmt_prepare($q, $query);

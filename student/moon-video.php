@@ -9,7 +9,7 @@
     </div> -->
     
                 <!-- Begin Page Content -->
-                <div class="container-fluid col-md-8 card-style mb-5 pb-4">
+                <div class="container-fluid col-md-8 student-card-style mb-5 pb-4">
                     
                     <!-- Page Heading -->
                     <div class="row">

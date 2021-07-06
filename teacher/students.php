@@ -70,8 +70,9 @@
                                             <th>DV</th>
                                             <th>E-mail</th>
                                             <th style="min-width:200px">Institución</th>
+                                            <th>Puntuaciones</th>
                                             <th>Estado</th>
-                                            <th>Acciones</th>
+                                            <th style="min-width:80px">Acciones</th>
                                         </tr>
                                     </thead>
                                     <!-- <tfoot>
@@ -100,6 +101,7 @@
                                         <td><?php echo $estudiante[5] ?></td>
                                         <td><?php echo $estudiante[6] ?></td>
                                         <td><?php echo ($array_instStud[$i][0][1]. " - ". $array_instStud[$i][0][2]) ?></td>
+                                        <td><div align="center"><a type="button" name="scores_button" href="scores.php?student_id=<?php echo $estudiante[0]?>" class="btn btn-info btn-sm scores_button"><i class="fas fa-star"></i></a></div></td>
                                         <td>
                                         <?php
 
@@ -237,8 +239,14 @@ $(document).ready(function(){
         paging:         true,
         fixedColumns:   {
             leftColumns: 0,
-            rightColumns: 2
-        }
+            rightColumns: 3
+        },
+        "columnDefs":[
+			{
+				"targets":[7, 8, 9],
+				"orderable":false,
+			},
+		],
     } );
 
     $('#student_form').on('submit', function(event){

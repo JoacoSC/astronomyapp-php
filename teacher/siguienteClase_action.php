@@ -23,9 +23,9 @@ if (empty($error)){
 
     foreach ($arrayEstudiantes as $id) :
 
-        //ACTUALIZANDO EL TEMA ACTUAL DE LA CLASE E INSERTANDO CEROS PARA ACTUALIZAR LA TABLA DE DATOS ( num)
+        //ACTUALIZANDO EL TEMA ACTUAL DE LA CLASE E INSERTANDO CEROS PARA ACTUALIZAR LA TABLA DE DATOS ( progress)
 
-        $query = "UPDATE data_srms SET current_subject_id=?, num=? WHERE student_id=?";
+        $query = "UPDATE data_srms SET current_subject_id=?, progress=? WHERE student_id=?";
         
         $q = mysqli_stmt_init($con);
         mysqli_stmt_prepare($q, $query);

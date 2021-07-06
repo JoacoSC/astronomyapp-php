@@ -1,5 +1,5 @@
 <?php
-    include 'header.php';
+    include 'game-header.php';
 ?>
 
     <!-- <div id="sendCtrls">
@@ -9,7 +9,7 @@
     </div> -->
     
                 <!-- Begin Page Content -->
-                <div class="container-fluid col-md-8 card-style mb-5 pb-4">
+                <div class="container-fluid col-md-12 student-card-style mb-5 pb-4">
                     
                     <!-- Page Heading -->
                     <div class="row">
@@ -24,11 +24,13 @@
                     <!-- Content Row -->
                     <span id="message"></span>
 
-                    <div class="card">
+                    <div class="card" style="height: 100%">
                         <div class="row">
-                            <div class="col-md-12">
-                                <div class="card-body">
-                                    
+                            <div class="col-md-12" style="width: 800px">
+                                <div class="card-body" style="min-height: 400px">
+                                    <div class="webgl-content" style="width: 800px">
+                                        <div id="gameContainer" style="width: 800px; height: 600px; position:absolute;"></div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -51,7 +53,7 @@
 
 <?php
 
-    include 'footer.php';
+    include 'game-footer.php';
 
 ?>            
 <script type="text/javascript">

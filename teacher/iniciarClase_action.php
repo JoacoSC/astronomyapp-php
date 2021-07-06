@@ -97,9 +97,9 @@ if (!empty($_SESSION['subjects_array'])){
             print "Error al actualizar!";
         }
 
-        //INSERTANDO CEROS PARA ACTUALIZAR LA TABLA DE DATOS (subject_id, num)
+        //INSERTANDO CEROS PARA ACTUALIZAR LA TABLA DE DATOS (subject_id, progress)
 
-        $query = "UPDATE data_srms SET current_subject_id=?, num=? WHERE student_id=?";
+        $query = "UPDATE data_srms SET current_subject_id=?, progress=? WHERE student_id=?";
         
         $q = mysqli_stmt_init($con);
         mysqli_stmt_prepare($q, $query);
@@ -118,7 +118,7 @@ if (!empty($_SESSION['subjects_array'])){
             print "Error al actualizar!";
         }
 
-        //INSERTANDO CEROS PARA ACTUALIZAR LA TABLA DE DATOS (subject_id, num)
+        //INSERTANDO CEROS PARA ACTUALIZAR LA TABLA DE DATOS (subject_id, progress)
 
         $subject_id = $_SESSION['subjects_array'][0]['subject_id'];
 

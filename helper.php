@@ -92,7 +92,7 @@ function actualizarDatos($con, $teacher_email){
 
     $cero = 0;
 
-    $query = "SELECT data_srms.student_id, data_srms.clase_en_vivo, data_srms.num, student_srms.student_name 
+    $query = "SELECT data_srms.student_id, data_srms.clase_en_vivo, data_srms.progress, student_srms.student_name 
     FROM data_srms INNER JOIN student_srms ON data_srms.student_id = student_srms.student_id WHERE data_srms.clase_en_vivo != 0 
     AND student_srms.email_profesor = ?";
 
@@ -792,6 +792,66 @@ function obtenerTemasClaseTeacher($con, $class_id){
     $result = mysqli_stmt_get_result($q);
 
     $row = mysqli_fetch_all($result);
+
+    /* return empty($row) ? false : $row; */
+
+    if(!empty($row)){
+
+        return $row;
+    }else{
+
+        return false;
+    }
+}
+
+function obtenerPuntajesEstudianteTeacher($con, $student_id){
+
+    /* *************** EDITAR ESTO ****************** */
+
+    $query = "SELECT * FROM scores_srms WHERE student_id = ?";
+
+    $q = mysqli_stmt_init($con);
+
+    mysqli_stmt_prepare($q, $query);
+
+    // bind the statement
+    mysqli_stmt_bind_param($q, 'i', $student_id);
+
+    // execute sql statement
+    mysqli_stmt_execute($q);
+    $result = mysqli_stmt_get_result($q);
+
+    $row = mysqli_fetch_all($result);
+
+    /* return empty($row) ? false : $row; */
+
+    if(!empty($row)){
+
+        return $row;
+    }else{
+
+        return false;
+    }
+}
+
+function obtenerDatosEstudianteTeacher($con, $student_id){
+
+    /* *************** EDITAR ESTO ****************** */
+
+    $query = "SELECT * FROM student_srms WHERE student_id = ?";
+
+    $q = mysqli_stmt_init($con);
+
+    mysqli_stmt_prepare($q, $query);
+
+    // bind the statement
+    mysqli_stmt_bind_param($q, 'i', $student_id);
+
+    // execute sql statement
+    mysqli_stmt_execute($q);
+    $result = mysqli_stmt_get_result($q);
+
+    $row = mysqli_fetch_array($result);
 
     /* return empty($row) ? false : $row; */
 
